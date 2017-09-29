@@ -1,0 +1,232 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Electron boilerplate</title>
+	<link rel="stylesheet" href="renderer/css/index.css">
+	<link rel="stylesheet" href="renderer/css/photon.css">
+
+	<!-- Javascript -->
+	<script src="renderer/js/start.js" charset="utf-8"></script>
+	<script src="renderer/js/menu.js" charset="utf-8"></script>
+</head>
+<body>
+<div class="window">
+	<!-- .toolbar-header sits at the top of your app -->
+
+	<header class="toolbar toolbar-header draggable">
+		<h1 class="title">Header with actions</h1>
+
+		<div class="toolbar-actions">
+			<div class="btn-group">
+				<button class="btn btn-default">
+					<span class="icon icon-home"></span>
+				</button>
+				<button class="btn btn-default">
+					<span class="icon icon-folder"></span>
+				</button>
+				<button class="btn btn-default active">
+					<span class="icon icon-cloud"></span>
+				</button>
+				<button class="btn btn-default">
+					<span class="icon icon-popup"></span>
+				</button>
+				<button class="btn btn-default">
+					<span class="icon icon-shuffle"></span>
+				</button>
+			</div>
+
+			<button class="btn btn-default">
+				<span class="icon icon-home icon-text"></span>
+				Filters
+			</button>
+
+			<button class="btn btn-default btn-dropdown pull-right">
+				<span class="icon icon-megaphone"></span>
+			</button>
+		</div>
+	</header>
+
+	<!-- Your app's content goes inside .window-content -->
+	<div class="window-content">
+		<div class="pane-group">
+			<div class="pane pane-sm sidebar">
+				<nav class="nav-group">
+					<h5 class="nav-group-title">Favorites</h5>
+					<span class="nav-group-item">
+                <span class="icon icon-home"></span>
+                connors
+              </span>
+					<span class="nav-group-item active">
+                <span class="icon icon-light-up"></span>
+                Photon
+              </span>
+					<span class="nav-group-item">
+                <span class="icon icon-download"></span>
+                Downloads
+              </span>
+					<span class="nav-group-item">
+                <span class="icon icon-folder"></span>
+                Documents
+              </span>
+					<span class="nav-group-item">
+                <span class="icon icon-window"></span>
+                Applications
+              </span>
+					<span class="nav-group-item">
+                <span class="icon icon-signal"></span>
+                AirDrop
+              </span>
+					<span class="nav-group-item">
+                <span class="icon icon-monitor"></span>
+                Desktop
+              </span>
+				</nav>
+				<ul class="list-group">
+					<li class="list-group-header">
+						<input class="form-control" type="text" placeholder="Search for someone">
+					</li>
+					<li class="list-group-item">
+						<img class="img-circle media-object pull-left" src="/assets/img/avatar.jpg" width="32" height="32">
+						<div class="media-body">
+							<strong>List item title</strong>
+							<p>Lorem ipsum dolor sit amet.</p>
+						</div>
+					</li>
+					<li class="list-group-item">
+						<img class="img-circle media-object pull-left" src="/assets/img/avatar2.png" width="32" height="32">
+						<div class="media-body">
+							<strong>List item title</strong>
+							<p>Lorem ipsum dolor sit amet.</p>
+						</div>
+					</li>
+				</ul>
+			</div>
+
+			<div class="pane">
+				<table class="table-striped">
+					<thead>
+					<tr>
+						<th>Name</th>
+						<th>Kind</th>
+						<th>Date Modified</th>
+						<th>Author</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr class="file_arq">
+						<td>bars.scss</td>
+						<td>Document</td>
+						<td>Oct 13, 2015</td>
+						<td>connors</td>
+					</tr>
+					<tr class="file_arq">
+						<td>base.scss</td>
+						<td>Document</td>
+						<td>Oct 13, 2015</td>
+						<td>connors</td>
+					</tr>
+					<tr class="file_arq">
+						<td>button-groups.scss</td>
+						<td>Document</td>
+						<td>Oct 13, 2015</td>
+						<td>connors</td>
+					</tr>
+					<tr class="file_arq">
+						<td>buttons.scss</td>
+						<td>Document</td>
+						<td>Oct 13, 2015</td>
+						<td>connors</td>
+					</tr>
+					<tr class="file_arq">
+						<td>docs.scss</td>
+						<td>Document</td>
+						<td>Oct 13, 2015</td>
+						<td>connors</td>
+					</tr>
+					<tr class="file_arq">
+						<td>forms.scss</td>
+						<td>Document</td>
+						<td>Oct 13, 2015</td>
+						<td>connors</td>
+					</tr>
+					<tr class="file_arq">
+						<td>grid.scss</td>
+						<td>Document</td>
+						<td>Oct 13, 2015</td>
+						<td>connors</td>
+					</tr>
+					<tr class="file_arq">
+						<td>icons.scss</td>
+						<td>Document</td>
+						<td>Oct 13, 2015</td>
+						<td>connors</td>
+					</tr>
+					<tr class="file_arq">
+						<td>images.scss</td>
+						<td>Document</td>
+						<td>Oct 13, 2015</td>
+						<td>connors</td>
+					</tr>
+					<tr class="file_arq">
+						<td>lists.scss</td>
+						<td>Document</td>
+						<td>Oct 13, 2015</td>
+						<td>connors</td>
+					</tr>
+					<tr class="file_arq">
+						<td>mixins.scss</td>
+						<td>Document</td>
+						<td>Oct 13, 2015</td>
+						<td>connors</td>
+					</tr>
+					<tr class="file_arq">
+						<td>navs.scss</td>
+						<td>Document</td>
+						<td>Oct 13, 2015</td>
+						<td>connors</td>
+					</tr>
+					<tr class="file_arq">
+						<td>normalize.scss</td>
+						<td>Document</td>
+						<td>Oct 13, 2015</td>
+						<td>connors</td>
+					</tr>
+					<tr class="file_arq">
+						<td>photon.scss</td>
+						<td>Document</td>
+						<td>Oct 13, 2015</td>
+						<td>connors</td>
+					</tr>
+					<tr class="file_arq">
+						<td>tables.scss</td>
+						<td>Document</td>
+						<td>Oct 13, 2015</td>
+						<td>connors</td>
+					</tr>
+					<tr class="file_arq">
+						<td>tabs.scss</td>
+						<td>Document</td>
+						<td>Oct 13, 2015</td>
+						<td>connors</td>
+					</tr>
+					<tr class="file_arq">
+						<td>utilities.scss</td>
+						<td>Document</td>
+						<td>Oct 13, 2015</td>
+						<td>connors</td>
+					</tr>
+					<tr class="file_arq">
+						<td>variables.scss</td>
+						<td>Document</td>
+						<td>Oct 13, 2015</td>
+						<td>connors</td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>
