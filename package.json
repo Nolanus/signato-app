@@ -19,7 +19,8 @@
   "dependencies": {
     "async": "^2.5.0",
     "electron-debug": "^1.0.0",
-    "xml2js": "^0.4.19"
+    "plist": "^2.1.0",
+    "quoted-printable": "^1.0.1"
   },
   "devDependencies": {
     "devtron": "^1.1.0",
