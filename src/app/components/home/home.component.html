@@ -1,75 +1,83 @@
 <!-- Your app's content goes inside .window-content -->
 <div class="pane-group">
-    <div class="pane pane-sm sidebar">
-        <nav class="nav-group">
-            <h5 class="nav-group-title">Favorites</h5>
-            <span class="nav-group-item">
+	<div class="pane pane-sm sidebar">
+		<nav class="nav-group">
+			<h5 class="nav-group-title">Favorites</h5>
+			<span class="nav-group-item">
                 <span class="icon icon-home"></span>
                 connors
               </span>
-            <span class="nav-group-item active">
+			<span class="nav-group-item active">
                 <span class="icon icon-light-up"></span>
                 Photon
               </span>
-            <span class="nav-group-item">
+			<span class="nav-group-item">
                 <span class="icon icon-download"></span>
                 Downloads
               </span>
-            <span class="nav-group-item">
+			<span class="nav-group-item">
                 <span class="icon icon-folder"></span>
                 Documents
               </span>
-            <span class="nav-group-item">
+			<span class="nav-group-item">
                 <span class="icon icon-window"></span>
                 Applications
               </span>
-            <span class="nav-group-item">
+			<span class="nav-group-item">
                 <span class="icon icon-signal"></span>
                 AirDrop
               </span>
-            <span class="nav-group-item">
+			<span class="nav-group-item">
                 <span class="icon icon-monitor"></span>
                 Desktop
               </span>
-        </nav>
-        <ul class="list-group" *ngFor="let location of locations">
-            <li class="list-group-header">
-                <input class="form-control" type="text" placeholder="{{title}}">
-            </li>
-            <li class="list-group-item" *ngFor="let sig of location.signatures" (click)="signature = sig">
-                <img class=" img-circle media-object pull-left" src="/assets/img/avatar.jpg" width="32" height="32">
-                <div class="media-body">
-                    <strong>{{ sig.signatureName + (sig.fileLocked ? 'lock' : '')}}</strong>
-                    <p>{{ sig.signatureUniqueId }}</p>
-                </div>
-            </li>
-            <li class="list-group-item">
-                <img class="img-circle media-object pull-left" src="/assets/img/avatar.jpg" width="32" height="32">
-                <div class="media-body">
-                    <strong>List item title</strong>
-                    <p>Lorem ipsum dolor sit amet.</p>
-                </div>
-            </li>
-            <li class="list-group-item">
-                <img class="img-circle media-object pull-left" src="/assets/img/avatar2.png" width="32" height="32">
-                <div class="media-body">
-                    <strong>List item title</strong>
-                    <p>Lorem ipsum dolor sit amet.</p>
-                </div>
-            </li>
-        </ul>
-    </div>
+		</nav>
+		<ul class="list-group">
+			<li class="list-group-header">
+				<input class="form-control" type="text" placeholder="{{title}}">
+			</li>
+			<li class="list-group-item" *ngFor="let sig of signatures" (click)="signature = sig">
+				<img class=" img-circle media-object pull-left" src="/assets/img/avatar.jpg" width="32" height="32">
+				<div class="media-body">
+					<strong>{{ sig.signatureName + (sig.fileLocked ? 'lock' : '')}}</strong>
+					<p>{{ sig.signatureUniqueId }}</p>
+				</div>
+			</li>
+			<li class="list-group-item">
+				<img class="img-circle media-object pull-left" src="/assets/img/avatar.jpg" width="32" height="32">
+				<div class="media-body">
+					<strong>List item title</strong>
+					<p>Lorem ipsum dolor sit amet.</p>
+				</div>
+			</li>
+			<li class="list-group-item">
+				<img class="img-circle media-object pull-left" src="/assets/img/avatar2.png" width="32" height="32">
+				<div class="media-body">
+					<strong>List item title</strong>
+					<p>Lorem ipsum dolor sit amet.</p>
+				</div>
+			</li>
+		</ul>
+	</div>
 
-    <div class="pane">
-        <div class="main-border">
-
-
-                    <p>Signature Name: </p>
-                    <p>Signature ID: </p>
+	<div class="pane">
+		<div class="main-border">
 
 
-        </div>
+			<p>Signature Name: </p>
+			<p>Signature ID: </p>
 
-        {{ signature | json }}
-    </div>
+
+			<div *ngIf="signature">
+				<ckeditor
+						[(ngModel)]="signature.content"
+						[config]="editorConfig"
+						[readonly]="false"
+						debounce="500">
+				</ckeditor>
+			</div>
+		</div>
+
+		{{ signature | json }}
+	</div>
 </div>

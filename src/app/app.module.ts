@@ -12,6 +12,7 @@ import { HomeComponent } from './components/home/home.component';
 import { AppRoutingModule } from './app-routing.module';
 
 import { ElectronService } from './providers/electron.service';
+import { CKEditorModule } from 'ng2-ckeditor';
 
 @NgModule({
     declarations: [
@@ -22,7 +23,8 @@ import { ElectronService } from './providers/electron.service';
         BrowserModule,
         FormsModule,
         HttpModule,
-        AppRoutingModule
+        AppRoutingModule,
+		CKEditorModule
     ],
     providers: [ElectronService],
     bootstrap: [AppComponent]

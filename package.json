@@ -66,6 +66,7 @@
     "@types/node": "7.0.7",
     "@types/quoted-printable": "^0.2.2",
     "autoprefixer": "7.1.4",
+    "ckeditor": "^4.7.3",
     "codelyzer": "3.2.0",
     "copyfiles": "1.2.0",
     "cross-env": "5.0.5",
