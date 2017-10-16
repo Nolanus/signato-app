@@ -9,3 +9,8 @@ interface Window {
   process: any;
   require: any;
 }
+
+/* Add the find method to the array */
+interface Array<T> {
+	find(predicate: (search: T) => boolean) : T;
+}

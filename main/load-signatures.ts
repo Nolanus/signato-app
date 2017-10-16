@@ -2,17 +2,18 @@ import { Stats, stat } from 'fs';
 import { resolve } from 'path';
 import { exec } from 'child_process';
 
-import { map, filter as asyncFilter, apply, Dictionary } from 'async';
+import { map, filter as asyncFilter } from 'async';
 
 import paths from './../data/paths';
-import IpcHandler from "./ipcHandler";
-import { SignaturesLocation } from "../data/paths";
-import Signature from "./signature";
+import IpcHandler from './ipcHandler';
+import { SignaturesLocation } from '../data/paths';
+import Signature from './signature';
+const {dialog} = require('electron');
 
 
 export class LoadMailSignatureHandler extends IpcHandler {
 
-	private signatureInstances: any/*{[id: string]: Signature}*/ = {};
+	private signatureInstances: {[id: string]: Signature} = {};
 
 	constructor(ipc: Electron.IpcMain) {
 		super(ipc);
@@ -34,7 +35,23 @@ export class LoadMailSignatureHandler extends IpcHandler {
 				event.sender.send('changed-signature-lock', 'Signature instance not found');
 				return;
 			}
-			signature.changeFileLock(apply(event.sender.send('changed-signature-lock')));
+			signature.changeFileLock((err: any, file: string, locked: boolean) => {
+				event.sender.send('changed-signature-lock', err, file, locked);
+			});
+		});
+
+		this.ipcMain.on('save-signature', (event, _signature: Signature) => {
+			if (_signature === undefined || _signature === null) {
+				event.sender.send('saved-signature', 'Signature instance not found');
+				return;
+			}
+			let signature = new Signature(_signature);
+			this.signatureInstances[signature.signatureUniqueId] = signature;
+
+			signature.save((err: any) => {
+				event.sender.send('saved-signature', err);
+				dialog.showMessageBox({type: 'info', buttons: ['OK'], message: "Signature saved"})
+			});
 		});
 	}
 

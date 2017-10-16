@@ -1,83 +1,97 @@
 <!-- Your app's content goes inside .window-content -->
 <div class="pane-group">
-	<div class="pane pane-sm sidebar">
-		<nav class="nav-group">
-			<h5 class="nav-group-title">Favorites</h5>
-			<span class="nav-group-item">
-                <span class="icon icon-home"></span>
-                connors
-              </span>
-			<span class="nav-group-item active">
-                <span class="icon icon-light-up"></span>
-                Photon
-              </span>
-			<span class="nav-group-item">
-                <span class="icon icon-download"></span>
-                Downloads
-              </span>
-			<span class="nav-group-item">
-                <span class="icon icon-folder"></span>
-                Documents
-              </span>
-			<span class="nav-group-item">
-                <span class="icon icon-window"></span>
-                Applications
-              </span>
-			<span class="nav-group-item">
-                <span class="icon icon-signal"></span>
-                AirDrop
-              </span>
-			<span class="nav-group-item">
-                <span class="icon icon-monitor"></span>
-                Desktop
-              </span>
-		</nav>
+	<div class="pane sidebar">
 		<ul class="list-group">
-			<li class="list-group-header">
-				<input class="form-control" type="text" placeholder="{{title}}">
-			</li>
-			<li class="list-group-item" *ngFor="let sig of signatures" (click)="signature = sig">
-				<img class=" img-circle media-object pull-left" src="/assets/img/avatar.jpg" width="32" height="32">
+			<li><h5 class="nav-group-title">Signatures ({{ signatures?.length }})</h5></li>
+			<li class="list-group-item" [class.active]="sig.signatureUniqueId === signature?.signatureUniqueId"
+				*ngFor="let sig of signatures" (click)="selectSignature(sig)">
+				<span class="avatar media-object pull-left">{{ sig.signatureName.substr(0,2) }}</span>
 				<div class="media-body">
-					<strong>{{ sig.signatureName + (sig.fileLocked ? 'lock' : '')}}</strong>
-					<p>{{ sig.signatureUniqueId }}</p>
-				</div>
-			</li>
-			<li class="list-group-item">
-				<img class="img-circle media-object pull-left" src="/assets/img/avatar.jpg" width="32" height="32">
-				<div class="media-body">
-					<strong>List item title</strong>
-					<p>Lorem ipsum dolor sit amet.</p>
-				</div>
-			</li>
-			<li class="list-group-item">
-				<img class="img-circle media-object pull-left" src="/assets/img/avatar2.png" width="32" height="32">
-				<div class="media-body">
-					<strong>List item title</strong>
-					<p>Lorem ipsum dolor sit amet.</p>
+					<strong>{{ sig.signatureName }}</strong>
+					<p>{{ previewContent(sig.content) | stripTags | truncate:60 }}</p>
 				</div>
 			</li>
 		</ul>
 	</div>
 
-	<div class="pane">
-		<div class="main-border">
-
-
-			<p>Signature Name: </p>
-			<p>Signature ID: </p>
-
-
-			<div *ngIf="signature">
+	<div class="pane signature-pane">
+		<div *ngIf="signature" class="padded-more">
+			<div class="colored-area clearfix">
+				<p class="description-paragraph">
+					<span>Signature Name:</span>
+					<span>{{ signature.signatureName }}</span>
+				</p>
+				<p class="description-paragraph">
+					<span>Location:</span>
+					<span>
+						<span class="icon"
+							  [ngClass]="{'icon-cloud': signature.type === 1, 'icon-drive': signature.type === 0}"
+						></span> {{ signature.type === 0 ? 'Local' : 'Cloud' }}</span>
+				</p>
+				<p class="description-paragraph">
+					<span>File status:</span>
+					<span (click)="changeSignatureFileLock($event, signature)">
+						<span class="icon"
+							  [class.icon-lock]="signature._fileLocked"
+							  [class.icon-lock-open]="!signature._fileLocked">
+						</span>
+						{{ signature._fileLocked ? 'Locked' : 'Not locked' }}
+					</span>
+				</p>
+				<div *ngIf="showMore">
+					<p class="description-paragraph">
+						<span>Accounts:</span>
+						<span>{{ signature.accountURLs.length > 0 ? signature.accountURLs.join('\n') : 'None assigned' }}</span>
+					</p>
+					<p class="description-paragraph">
+						<span>Signature ID:</span>
+						<span>{{ signature.signatureUniqueId }}</span>
+					</p>
+					<p class="description-paragraph">
+						<span>Message ID:</span>
+						<span>{{ signature.messageId }}</span>
+					</p>
+					<p class="description-paragraph">
+						<span>Mime Version:</span>
+						<span>{{ signature.mimeVersion }}</span>
+					</p>
+				</div>
+				<p (click)="showMore = !showMore" class="moreShow">
+					<span>
+						<span class="icon" [class.icon-down-dir]="!showMore" [class.icon-up-dir]="showMore"></span>
+						{{ showMore ? 'Less' : 'More'}}
+					</span>
+				</p>
+			</div>
+			<div>
 				<ckeditor
 						[(ngModel)]="signature.content"
 						[config]="editorConfig"
 						[readonly]="false"
-						debounce="500">
+						(ready)="onReady($event)"
+						(change)="onChange($event)">
 				</ckeditor>
 			</div>
 		</div>
+		<div *ngIf="!signature" class="padded-more">
+			<h2>Signato</h2>
+			<h4>Apple Mail HTML signatures made simple</h4>
+			<ol>
+				<li>Create a signature in Apple Mail and quit the Apple Mail application</li>
+				<li>Open Signato to edit the Signatures content on HTML basis</li>
+				<li>Hit the blue save button and enjoy your new signature</li>
+			</ol>
+		</div>
+		<footer *ngIf="signature" class="toolbar toolbar-footer">
+			<div class="toolbar-actions">
+				<button class="btn btn-default" (click)="reloadSignatures()">
+					Cancel
+				</button>
 
-		{{ signature | json }}
+				<button class="btn btn-primary pull-right" (click)="save()">
+					Save
+				</button>
+			</div>
+		</footer>
 	</div>
 </div>

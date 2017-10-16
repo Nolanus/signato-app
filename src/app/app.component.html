@@ -1,34 +1,36 @@
 <header class="toolbar toolbar-header draggable">
-  <h1 class="title">Header with actions</h1>
+	<h1 class="title">Signato</h1>
 
-  <div class="toolbar-actions">
-    <div class="btn-group">
-      <button class="btn btn-default">
-        <span class="icon icon-home"></span>
-      </button>
-      <button class="btn btn-default">
-        <span class="icon icon-folder"></span>
-      </button>
-      <button class="btn btn-default active">
-        <span class="icon icon-cloud"></span>
-      </button>
-      <button class="btn btn-default">
-        <span class="icon icon-popup"></span>
-      </button>
-      <button class="btn btn-default">
-        <span class="icon icon-shuffle"></span>
-      </button>
-    </div>
+	<div class="toolbar-actions">
+		<div class="btn-group">
+			<button class="btn btn-default" (click)="reloadSignatures()">
+				<span class="icon icon-arrows-ccw"></span>
+				&nbsp;Reload
+			</button>
+		</div>
 
-    <button class="btn btn-default">
-      <span class="icon icon-home icon-text"></span>
-      Filters
-    </button>
-
-    <button class="btn btn-default btn-dropdown pull-right">
-      <span class="icon icon-megaphone"></span>
-    </button>
-  </div>
+		<button class="btn btn-default btn-dropdown pull-right" (click)="openFeedbackPane()">
+			<span class="icon icon-comment"></span>
+		</button>
+	</div>
 </header>
-
+<div class="window-dialogs">
+	<modal class="dialog" #dialog="modal">
+		<h1 class="title left">Feedback</h1>
+		<div class="form-group">
+			<label for="feebackArea">Tell us about your experience of the app!</label>
+			<textarea class="form-control" rows="7" id="feebackArea" [(ngModel)]='feedbackText'
+					  [disabled]="feedbackStatus !== 0"></textarea>
+		</div>
+		<p>In case your encountered a bug you may alternatively create an issue on <a href="#" (click)="openGitHub()">this project's GitHub
+			repo</a>!</p>
+		<p>
+			<button class="btn btn-default" [disabled]="feedbackStatus !== 0" (click)="dialog.close()">Cancel</button>
+			<button class="btn btn-primary pull-right" (click)="sendFeedback()"
+					[disabled]="!feedbackText || feedbackStatus !== 0">
+				{{ feedbackStatus === 2 ? 'Sent!' : (feedbackStatus === 1 ? 'Sending...' : 'Send') }}
+			</button>
+		</p>
+	</modal>
+</div>
 <router-outlet></router-outlet>

@@ -1,17 +1,18 @@
 {
-  "name": "angular-electron",
-  "version": "1.9.0",
-  "description": "Angular 4 with Electron (Typescript + SASS + Hot Reload)",
-  "homepage": "https://github.com/maximegris/angular-electron",
+  "name": "signato-app",
+  "version": "1.0.0",
+  "description": "Apple Mail HTML signatures made simple",
+  "homepage": "https://github.com/Nolanus/signato-app",
   "author": {
-    "name": "Maxime GRIS",
-    "email": "maxime.gris@gmail.com"
+    "name": "Sebastian Fuss",
+    "email": "sebastian.fuss@googlemail.com"
   },
   "keywords": [
-    "angular",
-    "electron",
-    "typescript",
-    "sass"
+    "apple",
+    "mail",
+    "html",
+    "signature",
+    "installer"
   ],
   "main": "main.js",
   "private": true,
@@ -44,6 +45,7 @@
     "@angular/platform-browser": "4.4.3",
     "@angular/platform-browser-dynamic": "4.4.3",
     "@angular/router": "4.4.3",
+    "angular-pipes": "^6.5.3",
     "async": "^2.5.0",
     "core-js": "2.4.1",
     "electron-debug": "^1.4.0",
@@ -51,9 +53,10 @@
     "fast-plist": "^0.1.2",
     "install": "^0.10.1",
     "ng2-ckeditor": "^1.1.9",
+    "ngu-utility": "^1.0.3",
     "npm": "^5.4.2",
-    "photon": "git+https://github.com/connors/photon.git",
     "quoted-printable": "^1.0.1",
+    "request": "^2.83.0",
     "rxjs": "5.4.3",
     "zone.js": "0.8.17"
   },
@@ -65,6 +68,7 @@
     "@types/jasmine": "2.5.54",
     "@types/node": "7.0.7",
     "@types/quoted-printable": "^0.2.2",
+    "@types/request": "^2.0.5",
     "autoprefixer": "7.1.4",
     "ckeditor": "^4.7.3",
     "codelyzer": "3.2.0",
@@ -94,6 +98,7 @@
     "minimist": "1.2.0",
     "mkdirp": "0.5.1",
     "npm-run-all": "^4.1.1",
+    "photon": "git+https://github.com/connors/photon.git",
     "postcss-loader": "2.0.6",
     "postcss-url": "7.1.2",
     "protractor": "5.1.2",

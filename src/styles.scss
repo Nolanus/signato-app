@@ -1,9 +1,49 @@
 /* You can add global styles to this file, and also import other style files */
-@import "~photon/dist/css/photon.css";
-@import "frame-list.css";
+@import '~photon/dist/css/photon.css';
+@import 'css/frame-list.css';
+@import 'css/pane-size.css';
+@import 'css/progress.css';
+@import 'css/dialog.css';
 
 html, body {
   margin: 0;
   padding: 0;
   height: 100%;
+}
+
+a {
+  cursor: pointer;
+}
+
+.dialog-overlay {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+  border-radius: 50%;
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
+  color: white;
+  background: plum;
+  font-size: 18px;
+  text-transform: uppercase;
+}
+
+button[disabled] {
+  border-color: rgb(212, 212, 212);
+  background-image: none;
+  background-color: rgb(248, 248, 248);
+  color: rgb(168, 168, 168);
+  box-shadow: 0px 1px 0px -0.5px rgba(120, 120, 120, 0.2);
 }

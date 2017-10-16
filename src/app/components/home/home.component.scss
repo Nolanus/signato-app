@@ -1,0 +1,34 @@
+.signature-pane .padded-more {
+  height: calc(100% - 35px);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.description-paragraph {
+  margin: 7px 0;
+}
+
+.description-paragraph > span {
+  width: 70%;
+  text-align: left;
+  display: inline-block;
+}
+
+.description-paragraph > span:first-child {
+  width: 29%;
+  text-align: right;
+  padding-right: 7px;
+}
+
+.moreShow {
+  float: right;
+  font-size: 0.7rem;
+  margin: 0;
+}
+
+.sidebar {
+  width: 250px;
+  max-width: 400px;
+  min-width: 120px;
+  flex: 0 1 auto;
+}
