@@ -1,6 +1,7 @@
 {
   "name": "signato-app",
-  "version": "1.0.0",
+  "productName": "Signato",
+  "version": "1.0.1",
   "description": "Apple Mail HTML signatures made simple",
   "homepage": "https://github.com/Nolanus/signato-app",
   "author": {

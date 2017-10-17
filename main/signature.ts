@@ -170,6 +170,7 @@ export default class Signature {
 							acc[signatureUniqueId] = [];
 						}
 						acc[signatureUniqueId].push(decodeURIComponent(assignment.AccountURL));
+						return acc;
 					}, acc);
 					return acc;
 				}, {});

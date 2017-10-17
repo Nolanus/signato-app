@@ -4,7 +4,7 @@ var packager = require('electron-packager');
 const pkg = require('./package.json');
 const argv = require('minimist')(process.argv.slice(1));
 
-const appName = argv.name || pkg.name;
+const appName = argv.name || pkg.productName || pkg.name;
 const buildVersion = pkg.version || '1.0';
 const shouldUseAsar = argv.asar || false;
 const shouldBuildAll = argv.all || false;
