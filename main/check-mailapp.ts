@@ -11,6 +11,7 @@ export class CheckMailAppHandler extends IpcHandler {
 	}
 
 	protected register() {
+		this.logger.info('Registering CheckMailAppHandler');
 		this.checkMailApp(() => {
 			this.scheduleMailAppCheck();
 		});
@@ -28,14 +29,17 @@ export class CheckMailAppHandler extends IpcHandler {
 		}, 1500);
 	}
 
-	private checkMailApp(cb: (err: any, running: boolean) => void) {
-		exec('ps axo pid,command | awk \'!/grep/ && /Mail\\.app/\' | wc -l', (err, data) => {
+	private checkMailApp(cb: (err: any, running?: boolean) => void) {
+		// Mail.app/Contents/MacOS/Mail
+		exec("ps axo pid,command | awk '!/grep/ && /Mail\\.app\\/Contents\\/MacOS\\/Mail/'", (err, data) => {
 			if (err) {
-				console.error(err);
+				this.logger.error(err);
+				cb(err);
 				return;
 			}
-			let running = parseInt(data, 10) > 0;
+			let running = data.split(/\r\n|\r|\n/).length > 1;
 			if (running) {
+				this.logger.warn('Detected running MailApp: ' + JSON.stringify(data));
 				dialog.showMessageBox({
 					type: 'warning',
 					buttons: ['OK'],

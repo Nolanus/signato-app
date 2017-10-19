@@ -50,6 +50,7 @@
     "async": "^2.5.0",
     "core-js": "2.4.1",
     "electron-debug": "^1.4.0",
+    "electron-log": "^2.2.9",
     "enhanced-resolve": "3.3.0",
     "fast-plist": "^0.1.2",
     "install": "^0.10.1",

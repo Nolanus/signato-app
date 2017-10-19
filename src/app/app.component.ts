@@ -11,7 +11,7 @@ import { ModalDirective } from "./directives/modal.directive";
 export class AppComponent {
 	@ViewChild(ModalDirective) private feedbackDialog: ModalDirective;
 
-	public feedbackText: string;
+	public feedbackForm = {text: '', includeLogFile: false};
 	public feedbackStatus: number = 0;
 
 	constructor(public electronService: ElectronService, private dataService: DataService) {
@@ -38,7 +38,7 @@ export class AppComponent {
 				setTimeout(() => {
 					this.feedbackDialog.close();
 					this.feedbackStatus = 0;
-					this.feedbackText = '';
+					this.feedbackForm.text = '';
 				}, 1000);
 			});
 		} else {
@@ -59,7 +59,7 @@ export class AppComponent {
 
 	public sendFeedback() {
 		this.feedbackStatus = 1;
-		this.electronService.ipcRenderer.send('give-feedback', this.feedbackText);
+		this.electronService.ipcRenderer.send('give-feedback', this.feedbackForm.text, this.feedbackForm.includeLogFile);
 	}
 
 	public openGitHub() {

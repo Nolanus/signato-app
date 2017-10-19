@@ -1,6 +1,5 @@
 import { Stats, stat } from 'fs';
 import { resolve } from 'path';
-import { exec } from 'child_process';
 
 import { map, filter as asyncFilter } from 'async';
 
@@ -20,10 +19,11 @@ export class LoadMailSignatureHandler extends IpcHandler {
 	}
 
 	protected register() {
+		this.logger.info('Registering LoadMailSignatureHandler');
 		this.ipcMain.on('load-signatures', (event) => {
 			this.loadSignature(event, (err, data) => {
 				if (err) {
-					console.error(err);
+					this.logger.error(err);
 				}
 				event.sender.send('loaded-signatures', err, data);
 			});
@@ -50,12 +50,13 @@ export class LoadMailSignatureHandler extends IpcHandler {
 
 			signature.save((err: any) => {
 				event.sender.send('saved-signature', err);
-				dialog.showMessageBox({type: 'info', buttons: ['OK'], message: "Signature saved"})
+				dialog.showMessageBox({type: 'info', buttons: ['OK'], message: 'Signature saved'})
 			});
 		});
 	}
 
 	private loadSignature(event, cb) {
+		this.logger.info('Start loading signatures from all locations');
 		const allLocations = paths;
 
 		asyncFilter(allLocations, (signaturesLocation: SignaturesLocation, filterCb) => {
@@ -68,14 +69,21 @@ export class LoadMailSignatureHandler extends IpcHandler {
 			});
 		}, (err, existingLocations: SignaturesLocation[]) => {
 			if (err) {
+				this.logger.error('Error while filtering for existing locations: ' + err);
 				cb(err);
 				return;
 			}
+			this.logger.info('Found ' + existingLocations.length + ' existing signature locations');
+			this.logger.debug(JSON.stringify(existingLocations));
 			map(existingLocations, Signature.loadAllSignatures, (err: any, signatures: Signature[][]) => {
 				this.signatureInstances = {};
+				if (err) {
+					cb(err);
+					return;
+				}
 				const flattenedSignatures = [].concat.apply([], signatures);
 				flattenedSignatures.forEach((signature) => this.signatureInstances[signature.signatureUniqueId] = signature);
-				cb(err, flattenedSignatures);
+				cb(null, flattenedSignatures);
 			});
 		});
 	}

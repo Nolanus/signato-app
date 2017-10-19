@@ -1,13 +1,13 @@
-import { constants, access, readFile } from 'fs';
+import { constants, access, readFile, writeFile } from 'fs';
 import { resolve } from 'path';
 import { exec } from 'child_process';
 
 import { parse as plistParse } from 'fast-plist';
 import { decode } from 'quoted-printable';
 import { map as asyncMap, waterfall, map } from 'async';
+import * as logger from 'electron-log';
 
 import { SignaturesLocation } from '../data/paths';
-import { writeFile } from "fs";
 
 export interface AllSignaturesEntry {
 	SignatureUniqueId: string;
@@ -69,6 +69,7 @@ export default class Signature {
 			let content = trimmed.match(/^$([\s\S]*)/im);
 
 			if (encoding === null || messageId === null || mimeVersion === null || content === null) {
+				logger.info('MailSignature content is ' + signatureFileContents.trim());
 				throw new Error('Illegal argument, not a valid mailsignature file content');
 			}
 			this.messageId = messageId[1];
@@ -77,7 +78,8 @@ export default class Signature {
 			this.content = encoding[1] === 'quoted-printable' ? decode(content[0]).trim() : content[0].trim();
 			this.accountURLs = accountURLs || [];
 		} else {
-			throw 'Tried to create a signature with insufficient data provided';
+			logger.warn('Tried to create a signature with insufficient data provided: ' + JSON.stringify(arguments));
+			throw new Error('Tried to create a signature with insufficient data provided');
 		}
 	}
 
@@ -91,21 +93,28 @@ export default class Signature {
 
 	public changeFileLock(cb: (err: any, file: string, locked: boolean) => void) {
 		let file = this.filePath();
+		logger.debug('Changing file lock for ' + file + ', is currently ' + this._fileLocked);
 		exec('chflags ' + (!this._fileLocked ? '' : 'no') + 'uchg "' + file + '"', (err) => {
 			if (!err) {
-				this._fileLocked = !this._fileLocked
+				this._fileLocked = !this._fileLocked;
+				logger.debug('Changed file flag without error');
+			} else {
+				logger.error('Error while changing file lock: ' + err);
 			}
 			cb(err, file, this._fileLocked);
 		});
 	}
 
 	private checkFileLock(cb: (err: null, locked: boolean) => void) {
+		logger.debug('About to check file write access for  ' + this.filePath());
 		access(this.filePath(), constants.W_OK, (accessErr) => {
+			logger.debug('File write check produced: ' + accessErr);
 			cb(null, accessErr !== null);
 		});
 	}
 
 	private writeFile(cb: (err: any) => void) {
+		logger.debug('Writing new signature file contents to ' + this.filePath());
 		writeFile(this.filePath(), 'Content-Transfer-Encoding: 7bit\n' +
 			'Content-Type: text/html;\n' +
 			'	charset=us-ascii\n' +
@@ -136,6 +145,11 @@ export default class Signature {
 				}
 			}
 		], (err, result) => {
+			if (err) {
+				logger.error('Error while saving new signature: ' + err);
+			} else {
+				logger.info('File ' + this.filePath() + ' saved without errors');
+			}
 			cb(err, this.signatureUniqueId);
 		});
 	}
@@ -157,6 +171,10 @@ export default class Signature {
 					cb(err);
 					return;
 				}
+				logger.debug('Loaded allSignatures file contents:');
+				logger.debug(JSON.stringify(allSignatures));
+				logger.debug('Loaded AccountsMap file contents:');
+				logger.debug(JSON.stringify(accountsMap));
 
 				if (!Array.isArray(allSignatures)) {
 					cb(new Error('Illegal argument, not a valid AllSignatures.plist file content'));
@@ -185,7 +203,8 @@ export default class Signature {
 					access(signatureFilePath, constants.W_OK, (accessErr) => {
 						readFile(signatureFilePath, 'utf8', (err, sigFileContent) => {
 							if (err) {
-								cb(err);
+								logger.error('Error reading file ' + signatureFilePath + ' skipping it (' + err + ')');
+								cb(null, null);
 								return;
 							}
 
@@ -193,8 +212,9 @@ export default class Signature {
 								let signature = new Signature(signaturesLocation, allSignaturesEntry, accessErr !== null, signature2Accounts[allSignaturesEntry.SignatureUniqueId], sigFileContent);
 								mapCb(null, signature);
 							} catch (ex) {
-								console.warn('Unable to parse ' + signatureFilePath + ': ' + ex);
-								mapCb(ex);
+								logger.warn('Unable to parse ' + signatureFilePath + ': ' + ex);
+								// We can't parse that signature file, so skip it. We later remove all "null" entries from the array
+								mapCb(null, null);
 							}
 						});
 					})
@@ -203,7 +223,8 @@ export default class Signature {
 						cb(err);
 						return;
 					}
-					cb(null, result);
+					// Send an array with all non-null values to the callback
+					cb(null, result.filter((item) => item !== null));
 				});
 			}
 		);

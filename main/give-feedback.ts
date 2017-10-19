@@ -1,6 +1,11 @@
 import { dialog } from 'electron';
 import  * as request from 'request';
 import IpcHandler from './ipcHandler';
+import { createReadStream } from 'fs';
+import { exec } from "child_process";
+import { tmpdir } from "os";
+import { resolve } from "path";
+import { unlink } from "fs";
 
 export class GiveFeedbackHandler extends IpcHandler {
 
@@ -9,9 +14,10 @@ export class GiveFeedbackHandler extends IpcHandler {
 	}
 
 	protected register() {
-		this.ipcMain.on('give-feedback', (event, feedback) => {
+		this.logger.info('Registering GiveFeedbackHandler');
+		this.ipcMain.on('give-feedback', (event, feedback: string, includeLogFile: boolean) => {
 
-			this.sendFeedback(feedback, (err, data) => {
+			this.sendFeedback(feedback, includeLogFile, (err, data) => {
 				if (err) {
 					console.error(err);
 				}
@@ -20,16 +26,47 @@ export class GiveFeedbackHandler extends IpcHandler {
 		});
 	}
 
-	private sendFeedback(feedback, cb) {
-		request.post({
-			url: 'https://www.getform.org/f/872b9be7-b839-4298-b38c-6323a6b4b044',
-			form: {feedback}
-		}, function (err, httpResponse, body) { /* ... */
-			cb(err, body);
+	private sendFeedback(feedback: string, includeLogFile: boolean, cb: (error: any, body: string) => void) {
+		this.logger.info('Sending feedback to getForm, includeLogfile: ' + includeLogFile);
+		const logFile = this.logger.transports.file.file || this.logger.transports.file.findLogPath();
+		const zipLogFile = resolve(tmpdir(), 'log.zip');
+		if (!logFile) {
+			this.logger.error('No logfile path found');
+			cb(new Error('No logfile path found'), null);
+			return;
+		}
+		this.logger.info('Log file is located at ' + logFile + ', will zip to ' + zipLogFile);
+		exec('zip -X -j ' + zipLogFile + ' ' + logFile, (err) => {
+			if (err) {
+				cb(err, null);
+				return;
+			}
+			this.logger.debug('File zipped successfully');
+			const formData = {
+				feedback,
+				file: includeLogFile ? createReadStream(zipLogFile) : undefined
+			};
+
+			request.post({
+				url: 'https://www.getform.org/u/ffc54d12-e0c5-4140-855a-b88f948c94fa',
+				formData
+			}, (err, httpResponse, body) => {
+				if (err) {
+					this.logger.error('Error while sending the feedback data:' + err);
+				} else {
+					this.logger.info('Feedback send successfully: ' + JSON.stringify(httpResponse));
+				}
+				// Unlink the zip log file, but don't wait for that
+				unlink(zipLogFile, (err) => {
+					if (err) {
+						this.logger.error('Error unlinking the log zip file: ' + err);
+					} else {
+						this.logger.debug('Successfully unlinked the zip log file');
+					}
+				});
+				cb(err, body);
+			});
 		});
+
 	}
-
 }
-
-
-

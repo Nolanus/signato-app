@@ -1,12 +1,31 @@
-import { app, BrowserWindow, screen, ipcMain } from 'electron';
+import { app, BrowserWindow, screen, ipcMain, dialog } from 'electron';
+import { existsSync } from 'fs';
+import { resolve } from 'path';
+import * as log from 'electron-log';
 
 import { LoadMailSignatureHandler } from './main/load-signatures';
-import { CheckMailAppHandler } from "./main/check-mailapp";
-import { GiveFeedbackHandler } from "./main/give-feedback";
+import { CheckMailAppHandler } from './main/check-mailapp';
+import { GiveFeedbackHandler } from './main/give-feedback';
 
-let win, serve;
+let win, serve, debugMode = false;
 const args = process.argv.slice(1);
 serve = args.some(val => val === '--serve');
+let appPath = __dirname;
+
+if (!serve) {
+	const appContentStringStart = __dirname.indexOf('/Contents/Resources/app');
+	if (appContentStringStart >= 0) {
+		log.debug('Found app inside an .app, will adjust appPath');
+		appPath = __dirname.substr(0, appContentStringStart)
+	}
+	log.debug('AppPath is ' + appPath);
+
+	if (existsSync(resolve(appPath, '../DEBUG'))) {
+		log.transports.file.level = 'debug';
+		debugMode = true;
+		log.info('Found DEBUG file next to the executable, so will log everything into the file');
+	}
+}
 
 if (serve) {
 	require('electron-reload')(__dirname, {});
@@ -18,6 +37,22 @@ function createWindow() {
 
 	const electronScreen = screen;
 	const size = electronScreen.getPrimaryDisplay().workAreaSize;
+
+	const loadMailSignatureHandler = new LoadMailSignatureHandler(ipcMain);
+	const checkMailAppHandler = new CheckMailAppHandler(ipcMain);
+	const giveFeedbackHandler = new GiveFeedbackHandler(ipcMain);
+
+	if (debugMode) {
+		dialog.showMessageBox({
+			type: 'info',
+			buttons: ['OK'],
+			message: 'Debug Mode enabled',
+			detail: 'Signato is now running in Debug Mode with more verbose logging messages. Remove the "DEBUG" file next to the app and restart to run in normal mode.',
+			title: 'Debug Mode enabled'
+		}, () => {
+			// Just a dummy callback to not block the process
+		});
+	}
 
 	// Create the browser window.
 	win = new BrowserWindow({
@@ -72,8 +107,3 @@ try {
 	// Catch Error
 	// throw e;
 }
-
-
-const loadMailSignatureHandler = new LoadMailSignatureHandler(ipcMain);
-const checkMailAppHandler = new CheckMailAppHandler(ipcMain);
-const giveFeedbackHandler = new GiveFeedbackHandler(ipcMain);
