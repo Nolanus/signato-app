@@ -1,4 +1,5 @@
 import { constants, access, readFile, writeFile } from 'fs';
+import { decode as utf8decode } from 'utf8';
 import { resolve } from 'path';
 import { exec } from 'child_process';
 
@@ -64,18 +65,29 @@ export default class Signature {
 
 			const trimmed = signatureFileContents.trim();
 			let encoding = trimmed.match(/^Content-Transfer-Encoding: (.+)$/im);
-			let messageId = trimmed.match(/^Message-Id: <([0-9A-F\-]+)>$/im);
+			let messageId = trimmed.match(/^Message-Id: <([^>]+)>$/im);
 			let mimeVersion = trimmed.match(/Mime-Version: (.*)+/im);
-			let content = trimmed.match(/^$([\s\S]*)/im);
+			// let content = trimmed.match(/^$([\s\S]*)/im);
+			let content = trimmed.split('\n').reduce((acc, line) => {
+				if (acc.contentSection) {
+					acc.content = acc.content.concat(line, '\n');
+				} else if (line.trim().length === 0) {
+					acc.contentSection = true;
+				}
+				return acc;
+			}, {contentSection: false, content: ''}).content;
 
-			if (encoding === null || messageId === null || mimeVersion === null || content === null) {
-				logger.info('MailSignature content is ' + signatureFileContents.trim());
+			if (encoding === null || messageId === null || mimeVersion === null || content === undefined || content.length === 0) {
+				logger.debug('encoding: ' + JSON.stringify(encoding));
+				logger.debug('messageId: ' + JSON.stringify(messageId));
+				logger.debug('mimeVersion: ' + JSON.stringify(mimeVersion));
+				logger.debug('MailSignature content is ' + signatureFileContents.trim());
 				throw new Error('Illegal argument, not a valid mailsignature file content');
 			}
 			this.messageId = messageId[1];
 			this.encoding = encoding[1];
 			this.mimeVersion = mimeVersion[1];
-			this.content = encoding[1] === 'quoted-printable' ? decode(content[0]).trim() : content[0].trim();
+			this.content = encoding[1] === 'quoted-printable' ? utf8decode(decode(content)).trim() : content.trim();
 			this.accountURLs = accountURLs || [];
 		} else {
 			logger.warn('Tried to create a signature with insufficient data provided: ' + JSON.stringify(arguments));

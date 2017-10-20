@@ -11,6 +11,7 @@ import { ModalDirective } from "./directives/modal.directive";
 export class AppComponent {
 	@ViewChild(ModalDirective) private feedbackDialog: ModalDirective;
 
+	public appTitle = 'Signato';
 	public feedbackForm = {text: '', includeLogFile: false};
 	public feedbackStatus: number = 0;
 
@@ -18,17 +19,7 @@ export class AppComponent {
 
 		if (electronService.isElectron()) {
 			console.log('Mode electron');
-			// Check if electron is correctly injected (see externals in webpack.config.js)
-			console.log('c', electronService.ipcRenderer);
-			// Check if nodeJs childProcess is correctly injected (see externals in webpack.config.js)
-			console.log('c', electronService.childProcess);
-
-			electronService.ipcRenderer.on('mail-app', (event, running) => {
-				console.log('Mail app is' + (running ? '' : ' not') + ' running');
-
-				// TODO Depending on the running value overlay the whole app with a dialog
-
-			});
+			this.appTitle = this.appTitle.concat(' ', electronService.remote.app.getVersion());
 
 			electronService.ipcRenderer.on('gave-feedback', (event, err, data) => {
 				if (err) {

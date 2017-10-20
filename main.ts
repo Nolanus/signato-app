@@ -26,6 +26,7 @@ if (!serve) {
 		log.info('Found DEBUG file next to the executable, so will log everything into the file');
 	}
 }
+log.info('Starting Signato');
 
 if (serve) {
 	require('electron-reload')(__dirname, {});
