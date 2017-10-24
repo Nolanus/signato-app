@@ -9,26 +9,26 @@ const {Menu, MenuItem} = remote;
 let menu = new Menu();
 menu.append(new MenuItem({
 	label: "Delete",
-	click: function () {
+	click: () => {
 		// Trigger an alert when menu item is clicked
-		alert("Deleted")
+		alert("Deleted");
 	}
 }));
 
 menu.append(new MenuItem({
 	label: "More Info...",
-	click: function () {
+	click: () => {
 		// Trigger an alert when menu item is clicked
-		alert("Here is more information")
+		alert("Here is more information");
 	}
 }));
 
 // Add the listener
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
 
 	let filesContext = document.querySelectorAll(".file_arq");
 
-	filesContext.forEach(function (el) {
+	filesContext.forEach((el) => {
 		el.addEventListener("click", function (event) {
 			event.preventDefault();
 			menu.popup(remote.getCurrentWindow());

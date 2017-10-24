@@ -18,6 +18,38 @@ const DEFAULT_OPTS = {
     buildVersion: buildVersion
 };
 
+const pack = (plat, arch, cb) => {
+  // there is no darwin ia32 electron
+  if (plat === "darwin" && arch === "ia32") {
+    return;
+  }
+
+  let icon = "src/favicon";
+
+  if (icon) {
+    DEFAULT_OPTS.icon = icon + (() => {
+        let extension = ".png";
+        if (plat === "darwin") {
+          extension = ".icns";
+        } else if (plat === "win32") {
+          extension = ".ico";
+        }
+        return extension;
+      })();
+  }
+
+  const opts = Object.assign({}, DEFAULT_OPTS, {
+    platform: plat,
+    arch,
+    prune: true,
+    overwrite: true,
+    all: shouldBuildAll,
+    out: "app-builds"
+  });
+
+  console.log(opts);
+  packager(opts, cb);
+};
 
 pack(platform, arch, function done(err, appPath) {
     if (err) {
@@ -27,34 +59,3 @@ pack(platform, arch, function done(err, appPath) {
     }
 
 });
-
-function pack(plat, arch, cb) {
-    // there is no darwin ia32 electron
-    if (plat === "darwin" && arch === "ia32") return;
-
-    let icon = "src/favicon";
-
-    if (icon) {
-        DEFAULT_OPTS.icon = icon + (() => {
-            let extension = ".png";
-            if (plat === "darwin") {
-                extension = ".icns";
-            } else if (plat === "win32") {
-                extension = ".ico";
-            }
-            return extension;
-        })();
-    }
-
-    const opts = Object.assign({}, DEFAULT_OPTS, {
-        platform: plat,
-        arch,
-        prune: true,
-        overwrite: true,
-        all: shouldBuildAll,
-        out: `app-builds`
-    });
-
-    console.log(opts);
-    packager(opts, cb);
-}

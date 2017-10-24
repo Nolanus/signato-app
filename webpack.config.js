@@ -86,7 +86,7 @@ function getPlugins() {
     "excludeChunks": [],
     "title": "Webpack App",
     "xhtml": true,
-    "chunksSortMode": function sort(left, right) {
+    "chunksSortMode": (left, right) => {
       let leftIndex = entryPoints.indexOf(left.names[0]);
       let rightindex = entryPoints.indexOf(right.names[0]);
       if (leftIndex > rightindex) {
@@ -129,12 +129,12 @@ function getPlugins() {
         postcssUrl({
           "url": (obj) => {
             // Only convert root relative URLs, which CSS-Loader won't process into require().
-            if (!obj.url.startsWith('/') || obj.url.startsWith('//')) {
+            if (!obj.url.startsWith("/") || obj.url.startsWith("//")) {
               return obj.url;
             }
             if (deployUrl.match(/:\/\//)) {
               // If deployUrl contains a scheme, ignore baseHref use deployUrl as is.
-              return `${deployUrl.replace(/\/$/, '')}${obj.url}`;
+              return `${deployUrl.replace(/\/$/, "")}${obj.url}`;
             }
             else if (baseHref.match(/:\/\//)) {
               // If baseHref contains a scheme, include it as is.
@@ -144,7 +144,7 @@ function getPlugins() {
             else {
               // Join together base-href, deploy-url and the original URL.
               // Also dedupe multiple slashes into single ones.
-              return `/${baseHref}/${deployUrl}/${obj.url}`.replace(/\/\/+/g, '/');
+              return `/${baseHref}/${deployUrl}/${obj.url}`.replace(/\/\/+/g, "/");
             }
           }
         })
@@ -235,7 +235,7 @@ module.exports = {
     ],
     "aliasFields": [],
     "alias": { // WORKAROUND See. angular-cli/issues/5433
-      "environments": isProd ? path.resolve(__dirname, 'src/environments/index.prod.ts') : path.resolve(__dirname, 'src/environments/index.ts')
+      "environments": isProd ? path.resolve(__dirname, "src/environments/index.prod.ts") : path.resolve(__dirname, "src/environments/index.ts")
     },
     "modules": [
       "./node_modules"
@@ -268,7 +268,7 @@ module.exports = {
         "loader": "source-map-loader",
         "exclude": [
           /\/node_modules\//,
-          path.join(__dirname, 'node_modules', '@angular/compiler')
+          path.join(__dirname, "node_modules", "@angular/compiler")
         ]
       },
       {

@@ -1,30 +1,8 @@
-(function() {
+(function () {
   let sizingPane = false;
   let sizingPaneBounding = {};
   let sizingStartPos = [0, 0];
-  window.addEventListener("mousedown", function(event) {
-    getTargetPane(event, function(pane, bounding) {
-      sizingPane = pane;
-      sizingPaneBounding = bounding;
-      sizingStartPos = [event.pageX, event.pageY];
-    });
-  });
-  window.addEventListener("mousemove", function(event) {
-    let sizings = document.getElementsByClassName("sizing-pane");
-    for (let i = 0; i < sizings.length; i++) {
-      sizings[i].classList.remove("sizing-pane");
-    }
-    let isPaneGroup = event.target.hasParentClass("pane-group");
-    if (isPaneGroup.success) {
-      let group = isPaneGroup.parents[isPaneGroup.parents.length - 1];
-      let panes = group.getElementsByClassName("pane");
-      getTargetPane(event, function(pane, bounding) {
-        for (let i = 0; i < panes.length; i++) {
-          panes[i].classList.add("sizing-pane");
-        }
-      });
-    }
-  });
+
   function getTargetPane(event, callback) {
     let isPane = event.target.hasParentClass("pane");
     if (isPane.success === true) {
@@ -40,10 +18,36 @@
       }
     }
   }
-  window.addEventListener("mouseup", function() {
+
+  window.addEventListener("mousedown", function (event) {
+    getTargetPane(event, function (pane, bounding) {
+      sizingPane = pane;
+      sizingPaneBounding = bounding;
+      sizingStartPos = [event.pageX, event.pageY];
+    });
+  });
+
+  window.addEventListener("mousemove", function (event) {
+    let sizings = document.getElementsByClassName("sizing-pane");
+    for (let i = 0; i < sizings.length; i++) {
+      sizings[i].classList.remove("sizing-pane");
+    }
+    let isPaneGroup = event.target.hasParentClass("pane-group");
+    if (isPaneGroup.success) {
+      let group = isPaneGroup.parents[isPaneGroup.parents.length - 1];
+      let panes = group.getElementsByClassName("pane");
+      getTargetPane(event, function (pane, bounding) {
+        for (let i = 0; i < panes.length; i++) {
+          panes[i].classList.add("sizing-pane");
+        }
+      });
+    }
+  });
+
+  window.addEventListener("mouseup", function () {
     sizingPane = false;
   });
-  window.addEventListener("mousemove", function(event) {
+  window.addEventListener("mousemove", function (event) {
     if (sizingPane) {
       let sizing = [event.pageX - sizingStartPos[0], sizingStartPos[1] - event.pageY];
       let currWidth = sizingPaneBounding.width;
@@ -51,23 +55,23 @@
       sizingPane.style["width"] = newWidth + "px";
     }
   });
-})();
+}());
 
-HTMLElement.prototype.hasParentClass = function(className) {
+HTMLElement.prototype.hasParentClass = function (className) {
   let currParent = this;
   let parents = [];
-  while (currParent.tagName != undefined) {
+  while (currParent.tagName !== undefined) {
     parents.push(currParent);
     if (currParent.classList.contains(className)) {
       return {
         success: true,
         parents: parents
-      }
+      };
     }
     currParent = currParent.parentNode;
   }
   return {
     success: false,
     parents: parents
-  }
+  };
 };
