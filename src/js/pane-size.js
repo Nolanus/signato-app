@@ -1,7 +1,7 @@
 (function() {
-  var sizingPane = false;
-  var sizingPaneBounding = {};
-  var sizingStartPos = [0, 0];
+  let sizingPane = false;
+  let sizingPaneBounding = {};
+  let sizingStartPos = [0, 0];
   window.addEventListener("mousedown", function(event) {
     getTargetPane(event, function(pane, bounding) {
       sizingPane = pane;
@@ -10,30 +10,30 @@
     });
   });
   window.addEventListener("mousemove", function(event) {
-    var sizings = document.getElementsByClassName("sizing-pane");
-    for (var i = 0; i < sizings.length; i++) {
+    let sizings = document.getElementsByClassName("sizing-pane");
+    for (let i = 0; i < sizings.length; i++) {
       sizings[i].classList.remove("sizing-pane");
     }
-    var isPaneGroup = event.target.hasParentClass("pane-group");
+    let isPaneGroup = event.target.hasParentClass("pane-group");
     if (isPaneGroup.success) {
-      var group = isPaneGroup.parents[isPaneGroup.parents.length - 1];
-      var panes = group.getElementsByClassName("pane");
+      let group = isPaneGroup.parents[isPaneGroup.parents.length - 1];
+      let panes = group.getElementsByClassName("pane");
       getTargetPane(event, function(pane, bounding) {
-        for (var i = 0; i < panes.length; i++) {
+        for (let i = 0; i < panes.length; i++) {
           panes[i].classList.add("sizing-pane");
         }
       });
     }
   });
   function getTargetPane(event, callback) {
-    var isPane = event.target.hasParentClass("pane");
-    if (isPane.success == true) {
-      var target = isPane.parents[isPane.parents.length - 1];
-      var panes = target.parentNode.getElementsByClassName("pane");
-      for (var i = 0; i < panes.length; i++) {
-        var panePos = panes[i].getBoundingClientRect();
-        var limiterPos = panePos.right;
-        var mouseAcurracy = Math.abs(limiterPos - event.pageX);
+    let isPane = event.target.hasParentClass("pane");
+    if (isPane.success === true) {
+      let target = isPane.parents[isPane.parents.length - 1];
+      let panes = target.parentNode.getElementsByClassName("pane");
+      for (let i = 0; i < panes.length; i++) {
+        let panePos = panes[i].getBoundingClientRect();
+        let limiterPos = panePos.right;
+        let mouseAcurracy = Math.abs(limiterPos - event.pageX);
         if (mouseAcurracy <= 5 && i < panes.length - 1) {
           callback(panes[i], panePos);
         }
@@ -45,17 +45,17 @@
   });
   window.addEventListener("mousemove", function(event) {
     if (sizingPane) {
-      var sizing = [event.pageX - sizingStartPos[0], sizingStartPos[1] - event.pageY];
-      var currWidth = sizingPaneBounding.width;
-      var newWidth = currWidth + sizing[0];
+      let sizing = [event.pageX - sizingStartPos[0], sizingStartPos[1] - event.pageY];
+      let currWidth = sizingPaneBounding.width;
+      let newWidth = currWidth + sizing[0];
       sizingPane.style["width"] = newWidth + "px";
     }
   });
 })();
 
 HTMLElement.prototype.hasParentClass = function(className) {
-  var currParent = this;
-  var parents = [];
+  let currParent = this;
+  let parents = [];
   while (currParent.tagName != undefined) {
     parents.push(currParent);
     if (currParent.classList.contains(className)) {
@@ -70,4 +70,4 @@ HTMLElement.prototype.hasParentClass = function(className) {
     success: false,
     parents: parents
   }
-}
+};

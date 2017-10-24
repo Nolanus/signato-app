@@ -1,7 +1,7 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ElectronService } from './providers/electron.service';
-import { DataService } from "./providers/data.service";
-import { ModalDirective } from "./directives/modal.directive";
+import { DataService } from './providers/data.service';
+import { ModalDirective } from './directives/modal.directive';
 
 @Component({
 	selector: 'app-root',

@@ -14,8 +14,6 @@ import { StripTagsPipe } from "angular-pipes";
 export class HomeComponent implements OnInit, OnDestroy {
 	@HostBinding('class.window-content') windowContentBinding = true;
 
-	title = `App works !`;
-
 	public signatures: Signature[] = [];
 	public signature: Signature;
 	public showMore = false;

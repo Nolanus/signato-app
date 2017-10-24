@@ -1,13 +1,14 @@
-<img src="./src/favicon.png" width="150"/>
+<img src="./src/favicon.png" width="250"/>
 
 # Signato
 
-[![Travis Build Status][build-badge]][build]
-[![Dependencies Status][dependencyci-badge]][dependencyci]
-[![Make a pull request][prs-badge]][prs]
-[![Apache 2 License][license-badge]][license]
+[![Build Status](https://travis-ci.org/Nolanus/signato-app.svg?branch=master)](https://travis-ci.org/Nolanus/signato-app)
+[![Dependency Status](https://david-dm.org/Nolanus/signato-app.svg)](https://david-dm.org/Nolanus/signato-app)
+[![devDependency Status](https://david-dm.org/Nolanus/signato-app/dev-status.svg)](https://david-dm.org/Nolanus/signato-app?type=dev)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](http://makeapullrequest.com)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/1116c1f1f410482aa9fa5d4a7f2a67ec)](https://www.codacy.com/app/sebastian-fuss/signato-app?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Nolanus/signato-app&amp;utm_campaign=Badge_Grade)
 
-Easily install HTML signatures in Apple Mail without fiddling around in hidden folders
+Easily install HTML signatures in Apple Mail without fiddling around in hidden folders 😍
 
 ![Signato App](./screen.png)
 
@@ -49,7 +50,7 @@ To avoid issues caused by manipulating files used by Apple Mail, signato can onl
 
 ### I found a bug!
 
-Test whether the error occurs every time you perform certain steps (that you can reproduce it). For optimal bug reporting, please create a file named `DEBUG` next to the signato app. Then start signato app to enter the debug mode. Perform the erroneous function. Use the feedback feature at the top right to provide details of the error and set the check mark to attach the logfile!  
+Test whether the error occurs every time you perform certain steps (that you can reproduce it). For optimal bug reporting, please create a file named `DEBUG` next to the signato app. Then start signato app to enter the debug mode (a dialog will confirm the DEBUG mode). Perform the erroneous function. Use the feedback feature at the top right to provide details of the error and set the check mark to attach the logfile!  
 
 ### I want to give feedback?
 
