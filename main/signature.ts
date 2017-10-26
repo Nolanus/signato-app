@@ -230,7 +230,7 @@ export default class Signature {
       (cb) => this.checkFileLock(cb),
       (fileLocked, cb) => {
         if (fileLocked) {
-          this.changeFileLock(cb);
+          this.changeFileLock(() => cb(null));
         } else {
           cb(null);
         }
