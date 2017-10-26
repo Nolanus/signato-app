@@ -2,6 +2,8 @@
 
 # Signato
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/Nolanus/signato-app.svg)](https://greenkeeper.io/)
+
 [![Build Status](https://travis-ci.org/Nolanus/signato-app.svg?branch=master)](https://travis-ci.org/Nolanus/signato-app)
 [![Dependency Status](https://david-dm.org/Nolanus/signato-app.svg)](https://david-dm.org/Nolanus/signato-app)
 [![devDependency Status](https://david-dm.org/Nolanus/signato-app/dev-status.svg)](https://david-dm.org/Nolanus/signato-app?type=dev)
