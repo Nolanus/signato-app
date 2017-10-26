@@ -22,6 +22,10 @@ Create your HTML signature. Notice the [limited support of certain CSS technique
 
 Open Apple Mail, create a new signature and remember the name.
 
+## Download
+
+Precompiled/prepacked builds of signato that are ready to run on macOS can be found in the [releases section](https://github.com/Nolanus/signato-app/releases).
+
 ## Usage
 
 Apple Mail should always be closed when using signato, as it directly manipulates files used by Apple Mail.
