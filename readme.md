@@ -5,7 +5,7 @@
 [![Build Status](https://travis-ci.org/Nolanus/signato-app.svg?branch=master)](https://travis-ci.org/Nolanus/signato-app)
 [![Dependency Status](https://david-dm.org/Nolanus/signato-app.svg)](https://david-dm.org/Nolanus/signato-app)
 [![devDependency Status](https://david-dm.org/Nolanus/signato-app/dev-status.svg)](https://david-dm.org/Nolanus/signato-app?type=dev)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](http://makeapullrequest.com)
+[![Greenkeeper badge](https://badges.greenkeeper.io/Nolanus/signato-app.svg)](https://greenkeeper.io/)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/1116c1f1f410482aa9fa5d4a7f2a67ec)](https://www.codacy.com/app/sebastian-fuss/signato-app?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Nolanus/signato-app&amp;utm_campaign=Badge_Grade)
 
 Easily install HTML signatures in Apple Mail without fiddling around in hidden folders 😍
