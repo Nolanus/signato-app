@@ -15,7 +15,7 @@
 	</div>
 </header>
 <div class="window-dialogs">
-	<modal class="dialog" #dialog="modal">
+	<div appModal class="dialog">
 		<h1 class="title left">Feedback</h1>
 		<div class="form-group">
 			<label for="feebackArea">Tell us about your experience of the app!</label>
@@ -30,12 +30,12 @@
 		<p>In case your encountered a bug you may alternatively create an issue on <a href="#" (click)="openGitHub()">this
 			project's GitHub repo</a>!</p>
 		<p>
-			<button class="btn btn-default" [disabled]="feedbackStatus !== 0" (click)="dialog.close()">Cancel</button>
+			<button class="btn btn-default" [disabled]="feedbackStatus !== 0" (click)="feedbackDialog.close()">Cancel</button>
 			<button class="btn btn-primary pull-right" (click)="sendFeedback()"
 					[disabled]="!feedbackForm.text || feedbackStatus !== 0">
 				{{ feedbackStatus === 2 ? 'Sent!' : (feedbackStatus === 1 ? 'Sending...' : 'Send') }}
 			</button>
 		</p>
-	</modal>
+	</div>
 </div>
 <router-outlet></router-outlet>

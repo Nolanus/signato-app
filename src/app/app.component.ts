@@ -4,56 +4,55 @@ import { DataService } from './providers/data.service';
 import { ModalDirective } from './directives/modal.directive';
 
 @Component({
-	selector: 'app-root',
-	templateUrl: './app.component.html',
-	styleUrls: ['./app.component.scss']
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-	@ViewChild(ModalDirective) private feedbackDialog: ModalDirective;
+  @ViewChild(ModalDirective) public feedbackDialog: ModalDirective;
 
-	public appTitle = 'Signato';
-	public feedbackForm = {text: '', includeLogFile: false};
-	public feedbackStatus: number = 0;
+  public appTitle = 'Signato';
+  public feedbackForm = {text: '', includeLogFile: false};
+  public feedbackStatus = 0;
 
-	constructor(public electronService: ElectronService, private dataService: DataService) {
+  constructor(public electronService: ElectronService, private dataService: DataService) {
 
-		if (electronService.isElectron()) {
-			console.log('Mode electron');
-			this.appTitle = this.appTitle.concat(' ', electronService.remote.app.getVersion());
+    if (electronService.isElectron()) {
+      console.log('Mode electron');
+      this.appTitle = this.appTitle.concat(' ', electronService.remote.app.getVersion());
 
-			electronService.ipcRenderer.on('gave-feedback', (event, err, data) => {
-				if (err) {
-					console.error(err);
-				}
-				this.feedbackStatus = 2;
-				setTimeout(() => {
-					this.feedbackDialog.close();
-					this.feedbackStatus = 0;
-					this.feedbackForm.text = '';
-				}, 1000);
-			});
-		} else {
-			console.log('Mode web');
-		}
-	}
+      electronService.ipcRenderer.on('gave-feedback', (event, err, data) => {
+        if (err) {
+          console.error(err);
+        }
+        this.feedbackStatus = 2;
+        setTimeout(() => {
+          this.feedbackDialog.close();
+          this.feedbackStatus = 0;
+          this.feedbackForm.text = '';
+        }, 1000);
+      });
+    } else {
+      console.log('Mode web');
+    }
+  }
 
-	public reloadSignatures() {
-		this.dataService.loadSignatures();
-	}
+  public reloadSignatures() {
+    this.dataService.loadSignatures();
+  }
 
-	public openFeedbackPane() {
-		if (this.feedbackStatus === 0) {
-			//All settings are optional
-			this.feedbackDialog.toggle();
-		}
-	}
+  public openFeedbackPane() {
+    if (this.feedbackStatus === 0) {
+      this.feedbackDialog.toggle();
+    }
+  }
 
-	public sendFeedback() {
-		this.feedbackStatus = 1;
-		this.electronService.ipcRenderer.send('give-feedback', this.feedbackForm.text, this.feedbackForm.includeLogFile);
-	}
+  public sendFeedback() {
+    this.feedbackStatus = 1;
+    this.electronService.ipcRenderer.send('give-feedback', this.feedbackForm.text, this.feedbackForm.includeLogFile);
+  }
 
-	public openGitHub() {
-		this.electronService.shell.openExternal('https://github.com/Nolanus/signato-app/issues/new')
-	}
+  public openGitHub() {
+    this.electronService.shell.openExternal('https://github.com/Nolanus/signato-app/issues/new')
+  }
 }

@@ -1,63 +1,70 @@
-import { Directive, ElementRef, Input, Inject } from '@angular/core';
+import { Directive, ElementRef, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 
 @Directive({
-	selector: 'modal',
-	exportAs: 'modal'
+  selector: '[appModal]',
+  exportAs: 'modal'
 })
 export class ModalDirective {
 
-	private static overlay: ElementRef;
+  private static overlay: ElementRef;
 
-	constructor(private el: ElementRef, @Inject(DOCUMENT) private document: Document) {
-	}
+  private static fillDefaults(obj, defaults) {
+    const keys = Object.keys(defaults);
+    for (let i = 0; i < keys.length; i++) {
+      obj[keys[i]] = typeof defaults[keys[i]] === 'object' ?
+        ModalDirective.fillDefaults(obj[keys[i]], defaults[keys[i]])
+        : (!(keys[i] in obj) ? defaults[keys[i]] : obj[keys[i]]);
+    }
+    return obj;
+  }
 
-	public show() {
-		this.handle('show');
-	}
+  constructor(private el: ElementRef, @Inject(DOCUMENT) private document: Document) {
+  }
 
-	public close() {
-		this.handle('close');
-	}
+  public show() {
+    this.handle('show');
+  }
 
-	public toggle() {
-		this.handle('auto');
-	}
+  public close() {
+    this.handle('close');
+  }
 
-	private getOverlay(): ElementRef {
-		if (!ModalDirective.overlay) {
-			let overlay = this.document.createElement('div');
-			overlay.className = 'dialog-overlay';
-			this.document.getElementsByClassName('window-content')[0].appendChild(overlay);
-			ModalDirective.overlay = new ElementRef(overlay);
-		}
-		return ModalDirective.overlay;
-	}
+  public toggle() {
+    this.handle('auto');
+  }
 
-	private handle(action) {
-		const dialog = this.el.nativeElement;
-		const opts = ModalDirective.fillDefaults({action}, {
-			action: 'auto',
-			speed: 0.3
-		});
-		if (opts.action == 'auto') opts.action = dialog.classList.contains('show') ? 'close' : 'open';
-		dialog.style.transitionDuration = opts.speed + 's';
+  private getOverlay(): ElementRef {
+    if (!ModalDirective.overlay) {
+      const overlay = this.document.createElement('div');
+      overlay.className = 'dialog-overlay';
+      this.document.getElementsByClassName('window-content')[0].appendChild(overlay);
+      ModalDirective.overlay = new ElementRef(overlay);
+    }
+    return ModalDirective.overlay;
+  }
 
-		let overlay = this.getOverlay();
+  private handle(action) {
+    const dialog = this.el.nativeElement;
+    const opts = ModalDirective.fillDefaults({action}, {
+      action: 'auto',
+      speed: 0.3
+    });
+    if (opts.action === 'auto') {
+      opts.action = dialog.classList.contains('show') ? 'close' : 'open';
+    }
+    dialog.style.transitionDuration = opts.speed + 's';
 
-		if (opts.action === 'close') {
-			dialog.classList.remove('show');
-			overlay.nativeElement.classList.remove('show');
-		} else {
-			dialog.classList.add('show');
-			overlay.nativeElement.classList.add('show');
-		}
-	}
+    const overlay = this.getOverlay();
 
-	private static fillDefaults(obj, defaults) {
-		const keys = Object.keys(defaults);
-		for (let i = 0; i < keys.length; i++) obj[keys[i]] = typeof defaults[keys[i]] == 'object' ? ModalDirective.fillDefaults(obj[keys[i]], defaults[keys[i]]) : (!(keys[i] in obj) ? defaults[keys[i]] : obj[keys[i]]);
-		return obj;
-	}
+    if (opts.action === 'close') {
+      dialog.classList.remove('show');
+      overlay.nativeElement.classList.remove('show');
+    } else {
+      dialog.classList.add('show');
+      overlay.nativeElement.classList.add('show');
+    }
+  }
+
 
 }

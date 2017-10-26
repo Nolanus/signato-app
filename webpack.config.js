@@ -1,3 +1,5 @@
+/* eslint-disable object-shorthand */
+
 const path = require("path");
 const webpack = require("webpack");
 const ProgressPlugin = require("webpack/lib/ProgressPlugin");
@@ -26,8 +28,7 @@ const styles = [
 
 //we add all our external scripts we want to load externally, like inserting in our index.html --> like as if it"s .angular-cli.json
 const scripts = [
-  "./src/js/pane-size.js",
-  "./src/js/dialog.js"
+  "./src/js/pane-size.js"
 ];
 
 //create file path for each , so we use for our excludes and includes where needed

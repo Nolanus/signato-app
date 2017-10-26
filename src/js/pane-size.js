@@ -1,4 +1,5 @@
-(function () {
+/* eslint-disable object-shorthand */
+(function (win, doc) {
   let sizingPane = false;
   let sizingPaneBounding = {};
   let sizingStartPos = [0, 0];
@@ -9,17 +10,18 @@
       let target = isPane.parents[isPane.parents.length - 1];
       let panes = target.parentNode.getElementsByClassName("pane");
       for (let i = 0; i < panes.length; i++) {
-        let panePos = panes[i].getBoundingClientRect();
+        const pane = panes[i];
+        let panePos = pane.getBoundingClientRect();
         let limiterPos = panePos.right;
-        let mouseAcurracy = Math.abs(limiterPos - event.pageX);
-        if (mouseAcurracy <= 5 && i < panes.length - 1) {
+        let mouseAccuracy = Math.abs(limiterPos - event.pageX);
+        if (mouseAccuracy <= 5 && i < panes.length - 1) {
           callback(panes[i], panePos);
         }
       }
     }
   }
 
-  window.addEventListener("mousedown", function (event) {
+  win.addEventListener("mousedown", function (event) {
     getTargetPane(event, function (pane, bounding) {
       sizingPane = pane;
       sizingPaneBounding = bounding;
@@ -27,8 +29,8 @@
     });
   });
 
-  window.addEventListener("mousemove", function (event) {
-    let sizings = document.getElementsByClassName("sizing-pane");
+  win.addEventListener("mousemove", function (event) {
+    let sizings = doc.getElementsByClassName("sizing-pane");
     for (let i = 0; i < sizings.length; i++) {
       sizings[i].classList.remove("sizing-pane");
     }
@@ -38,16 +40,16 @@
       let panes = group.getElementsByClassName("pane");
       getTargetPane(event, function (pane, bounding) {
         for (let i = 0; i < panes.length; i++) {
-          panes[i].classList.add("sizing-pane");
+          panes.item(i).classList.add("sizing-pane");
         }
       });
     }
   });
 
-  window.addEventListener("mouseup", function () {
+  win.addEventListener("mouseup", function () {
     sizingPane = false;
   });
-  window.addEventListener("mousemove", function (event) {
+  win.addEventListener("mousemove", function (event) {
     if (sizingPane) {
       let sizing = [event.pageX - sizingStartPos[0], sizingStartPos[1] - event.pageY];
       let currWidth = sizingPaneBounding.width;
@@ -55,7 +57,7 @@
       sizingPane.style["width"] = newWidth + "px";
     }
   });
-}());
+}(window, document));
 
 HTMLElement.prototype.hasParentClass = function (className) {
   let currParent = this;

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Subject } from 'rxjs/Subject';
 import { ipcRenderer } from 'electron';
 
 import { ElectronService } from './electron.service';

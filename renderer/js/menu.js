@@ -32,6 +32,6 @@ document.addEventListener("DOMContentLoaded", () => {
 		el.addEventListener("click", function (event) {
 			event.preventDefault();
 			menu.popup(remote.getCurrentWindow());
-		})
+		});
 	})
 });

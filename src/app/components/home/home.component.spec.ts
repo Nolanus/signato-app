@@ -41,15 +41,14 @@ describe('HomeComponent', () => {
   });
 
   it('display signatures in the list', async(() => {
-    const fixture = TestBed.createComponent(HomeComponent);
     fixture.detectChanges();
-    const component = fixture.debugElement.componentInstance;
+    const comp = fixture.debugElement.componentInstance;
     const compiled = fixture.debugElement.nativeElement;
 
     expect(compiled.querySelector('h5.nav-group-title').textContent).toBe('Signatures (0)');
 
     // Trigger a data submission
-    component.dataService.signatures.next([{signatureName: 'Test', content: '123412341234'}]);
+    comp.dataService.signatures.next([{signatureName: 'Test', content: '123412341234'}]);
 
     fixture.detectChanges();
 
@@ -67,18 +66,17 @@ describe('HomeComponent', () => {
       messageId: 'messageId',
       mimeVersion: 'mimeVersion'
     }];
-    const fixture = TestBed.createComponent(HomeComponent);
-    const component = fixture.debugElement.componentInstance;
+    const comp = fixture.debugElement.componentInstance;
     const compiled = fixture.debugElement.nativeElement;
     fixture.detectChanges();
-    component.dataService.signatures.next(demoSignatures);
+    comp.dataService.signatures.next(demoSignatures);
     fixture.detectChanges();
     expect(compiled.querySelector('h4').textContent).toBe('Apple Mail HTML signatures made simple');
     expect(compiled.querySelector('h5.nav-group-title').textContent).toBe('Signatures (1)');
     const listItems = compiled.querySelectorAll('li.list-group-item');
     expect(listItems.length).toBe(1);
     listItems[0].click();
-    expect(component.signature).toBe(demoSignatures[0]);
+    expect(comp.signature).toBe(demoSignatures[0]);
     fixture.detectChanges();
     expect(compiled.querySelector('li.list-group-item').classList).toContain('active');
     const detailIcons = compiled.querySelectorAll('.description-paragraph span.icon');

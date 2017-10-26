@@ -1,4 +1,5 @@
 "use strict";
+/* eslint-disable no-console object-shorthand */
 
 const packager = require("electron-packager");
 const pkg = require("./package.json");

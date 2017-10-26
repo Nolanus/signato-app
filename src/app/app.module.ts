@@ -20,22 +20,22 @@ import { ElectronService } from './providers/electron.service';
 import { DataService } from './providers/data.service';
 
 @NgModule({
-	declarations: [
-		AppComponent,
-		HomeComponent,
-		ModalDirective
-	],
-	imports: [
-		BrowserModule,
-		FormsModule,
-		HttpModule,
-		AppRoutingModule,
-		CKEditorModule,
-		NgStringPipesModule,
-		NguUtilityModule
-	],
-	providers: [ElectronService, DataService],
-	bootstrap: [AppComponent]
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    ModalDirective
+  ],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    HttpModule,
+    AppRoutingModule,
+    CKEditorModule,
+    NgStringPipesModule,
+    NguUtilityModule
+  ],
+  providers: [ElectronService, DataService],
+  bootstrap: [AppComponent]
 })
 export class AppModule {
 }
