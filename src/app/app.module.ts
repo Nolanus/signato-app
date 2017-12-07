@@ -2,13 +2,12 @@ import 'zone.js/dist/zone-mix';
 import 'reflect-metadata';
 import 'polyfills';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 
 import { CKEditorModule } from 'ng2-ckeditor';
 import { NgStringPipesModule } from 'angular-pipes';
-import { NguUtilityModule } from 'ngu-utility/ngu-utility.module';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
@@ -18,6 +17,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { ModalDirective } from './directives/modal.directive';
 import { ElectronService } from './providers/electron.service';
 import { DataService } from './providers/data.service';
+import { GlobalErrorHandler } from './handlers/global.errorhandler';
 
 @NgModule({
   declarations: [
@@ -28,13 +28,19 @@ import { DataService } from './providers/data.service';
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule,
+    HttpClientModule,
     AppRoutingModule,
     CKEditorModule,
-    NgStringPipesModule,
-    NguUtilityModule
+    NgStringPipesModule
   ],
-  providers: [ElectronService, DataService],
+  providers: [
+    ElectronService,
+    DataService,
+    {
+      provide: ErrorHandler,
+      useClass: GlobalErrorHandler
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

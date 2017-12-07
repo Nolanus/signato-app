@@ -31,7 +31,7 @@ export class LoadMailSignatureHandler extends IpcHandler {
     });
 
     this.ipcMain.on('change-signature-lock', (event, filePath, fileName) => {
-      let signature = this.signatureInstances[fileName];
+      const signature = this.signatureInstances[fileName];
       if (signature === undefined || signature === null) {
         event.sender.send('changed-signature-lock', 'Signature instance not found');
         return;
@@ -46,7 +46,7 @@ export class LoadMailSignatureHandler extends IpcHandler {
         event.sender.send('saved-signature', 'Signature instance not found');
         return;
       }
-      let signature = new Signature(_signature);
+      const signature = new Signature(_signature);
       this.signatureInstances[signature.signatureUniqueId] = signature;
 
       signature.save((err: any) => {
@@ -57,9 +57,9 @@ export class LoadMailSignatureHandler extends IpcHandler {
             buttons: ['OK'],
             message: 'Error while saving signature',
             detail: err.stack
-          })
+          });
         } else {
-          dialog.showMessageBox({type: 'info', buttons: ['OK'], message: 'Signature saved'})
+          dialog.showMessageBox({type: 'info', buttons: ['OK'], message: 'Signature saved'});
         }
       });
     });
@@ -85,10 +85,10 @@ export class LoadMailSignatureHandler extends IpcHandler {
       }
       this.logger.info('Found ' + existingLocations.length + ' existing signature locations');
       this.logger.debug(JSON.stringify(existingLocations));
-      map(existingLocations, Signature.loadAllSignatures, (err: any, signatures: Signature[][]) => {
+      map(existingLocations, Signature.loadAllSignatures, (mapErr: any, signatures: Signature[][]) => {
         this.signatureInstances = {};
-        if (err) {
-          cb(err);
+        if (mapErr) {
+          cb(mapErr);
           return;
         }
         const flattenedSignatures = [].concat.apply([], signatures);
