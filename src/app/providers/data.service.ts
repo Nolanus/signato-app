@@ -16,6 +16,7 @@ export class DataService {
     }
     this.electronService.ipcRenderer.on('loaded-signatures', (event, err, data) => {
       if (err) {
+        this.electronService.remote.dialog.showMessageBox({type: 'error', message: err.toString(), detail: err.stack});
         console.error(err);
       } else {
         this.signatures.next(data);
@@ -24,7 +25,7 @@ export class DataService {
     this.electronService.ipcRenderer.on('saved-signature', (event, signatureUniqueId) => {
       this.loadSignatures();
     });
-    this.electronService.ipcRenderer.on('changed-signature-lock', (event, signatureUniqueId) => {
+    this.electronService.ipcRenderer.on('changed-signature-lock', (event, err, file, locked) => {
       this.loadSignatures();
     });
   }
