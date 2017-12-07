@@ -1,23 +1,23 @@
-const fs = require('fs');
-const path = require('path');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const ProgressPlugin = require('webpack/lib/ProgressPlugin');
-const CircularDependencyPlugin = require('circular-dependency-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const autoprefixer = require('autoprefixer');
-const postcssUrl = require('postcss-url');
-const customProperties = require('postcss-custom-properties');
+const fs = require("fs");
+const path = require("path");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
+const ProgressPlugin = require("webpack/lib/ProgressPlugin");
+const CircularDependencyPlugin = require("circular-dependency-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const autoprefixer = require("autoprefixer");
+const postcssUrl = require("postcss-url");
+const customProperties = require("postcss-custom-properties");
 
-const { NoEmitOnErrorsPlugin, SourceMapDevToolPlugin, DefinePlugin, NamedModulesPlugin } = require('webpack');
-const { BaseHrefWebpackPlugin, NamedLazyChunksWebpackPlugin, InsertConcatAssetsWebpackPlugin } = require('@angular/cli/plugins/webpack');
-const { CommonsChunkPlugin } = require('webpack').optimize;
-const { AngularCompilerPlugin } = require('@ngtools/webpack');
-const ConcatPlugin = require('webpack-concat-plugin');
+const { NoEmitOnErrorsPlugin, SourceMapDevToolPlugin, DefinePlugin, NamedModulesPlugin } = require("webpack");
+const { BaseHrefWebpackPlugin, NamedLazyChunksWebpackPlugin, InsertConcatAssetsWebpackPlugin } = require("@angular/cli/plugins/webpack");
+const { CommonsChunkPlugin } = require("webpack").optimize;
+const { AngularCompilerPlugin } = require("@ngtools/webpack");
+const ConcatPlugin = require("webpack-concat-plugin");
 
-const nodeModules = path.join(process.cwd(), 'node_modules');
+const nodeModules = path.join(process.cwd(), "node_modules");
 const realNodeModules = fs.realpathSync(nodeModules);
-const genDirNodeModules = path.join(process.cwd(), 'src', '$$_gendir', 'node_modules');
+const genDirNodeModules = path.join(process.cwd(), "src", "$$_gendir", "node_modules");
 const entryPoints = ["inline", "polyfills", "sw-register", "styles", "vendor", "main"];
 const minimizeCss = false;
 const baseHref = "";
@@ -35,22 +35,22 @@ const postcssPlugins = function () {
   return [
       postcssUrl({
           url: (obj) => {
-            if (!obj.url.startsWith('/') || obj.url.startsWith('//')) {
+            if (!obj.url.startsWith("/") || obj.url.startsWith("//")) {
               return obj.url;
             }
             if (deployUrl.match(/:\/\//)) {
               // If deployUrl contains a scheme, ignore baseHref use deployUrl as is.
-              return `${deployUrl.replace(/\/$/, '')}${obj.url}`;
+              return `${deployUrl.replace(/\/$/, "")}${obj.url}`;
             }
             else if (baseHref.match(/:\/\//)) {
               // If baseHref contains a scheme, include it as is.
-              return baseHref.replace(/\/$/, '') +
-                `/${deployUrl}/${obj.url}`.replace(/\/\/+/g, '/');
+              return baseHref.replace(/\/$/, "") +
+                `/${deployUrl}/${obj.url}`.replace(/\/\/+/g, "/");
             }
             else {
               // Join together base-href, deploy-url and the original URL.
               // Also dedupe multiple slashes into single ones.
-              return `/${baseHref}/${deployUrl}/${obj.url}`.replace(/\/\/+/g, '/');
+              return `/${baseHref}/${deployUrl}/${obj.url}`.replace(/\/\/+/g, "/");
             }
           }
       }),
@@ -59,7 +59,7 @@ const postcssPlugins = function () {
   ].concat(minimizeCss ? [cssnano(minimizeOptions)] : []);
 };
 
-const isProd = (process.env.NODE_ENV === 'production');
+const isProd = (process.env.NODE_ENV === "production");
 
 //add all external css to be added in our index.html--> like as if it's .angular-cli.json
 const styles = [
@@ -71,7 +71,7 @@ const scripts = [
 ];
 
 //create file path for each , so we use for our excludes and includes where needed
-let style_paths = styles.map(style_src => path.join(process.cwd(), style_src));
+let stylePaths = styles.map(style_src => path.join(process.cwd(), style_src));
 
 function getPlugins() {
   var plugins = [];
@@ -271,7 +271,7 @@ module.exports = {
     ],
     "aliasFields": [],
     "alias": { // WORKAROUND See. angular-cli/issues/5433
-      "environments": isProd ? path.resolve(__dirname, 'src/environments/index.prod.ts') : path.resolve(__dirname, 'src/environments/index.ts')
+      "environments": isProd ? path.resolve(__dirname, "src/environments/index.prod.ts") : path.resolve(__dirname, "src/environments/index.ts")
     },
     "modules": [
       "./node_modules"
@@ -313,7 +313,7 @@ module.exports = {
         "use": ["file-loader?name=[path][name].[ext]"]
       },
       {
-        "exclude": style_paths,
+        "exclude": stylePaths,
         "test": /\.css$/,
         "use": [
           "exports-loader?module.exports.toString()",
@@ -334,7 +334,7 @@ module.exports = {
         ]
       },
       {
-        "exclude": style_paths,
+        "exclude": stylePaths,
         "test": /\.scss$|\.sass$/,
         "use": [
           "exports-loader?module.exports.toString()",
@@ -363,7 +363,7 @@ module.exports = {
         ]
       },
       {
-        "exclude": style_paths,
+        "exclude": stylePaths,
         "test": /\.less$/,
         "use": [
           "exports-loader?module.exports.toString()",
@@ -390,7 +390,7 @@ module.exports = {
         ]
       },
       {
-        "exclude": style_paths,
+        "exclude": stylePaths,
         "test": /\.styl$/,
         "use": [
           "exports-loader?module.exports.toString()",
@@ -418,7 +418,7 @@ module.exports = {
         ]
       },
       {
-        "include": style_paths,
+        "include": stylePaths,
         "test": /\.css$/,
         "use": [
           "style-loader",
@@ -439,7 +439,7 @@ module.exports = {
         ]
       },
       {
-        "include": style_paths,
+        "include": stylePaths,
         "test": /\.scss$|\.sass$/,
         "use": [
           "style-loader",
@@ -468,7 +468,7 @@ module.exports = {
         ]
       },
       {
-        "include":style_paths,
+        "include":stylePaths,
         "test": /\.less$/,
         "use": [
           "style-loader",
@@ -495,7 +495,7 @@ module.exports = {
         ]
       },
       {
-        "include": style_paths,
+        "include": stylePaths,
         "test": /\.styl$/,
         "use": [
           "style-loader",
