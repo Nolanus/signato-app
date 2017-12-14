@@ -3,7 +3,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NgStringPipesModule } from 'angular-pipes';
 import { FormsModule } from '@angular/forms';
 import { CKEditorModule } from 'ng2-ckeditor';
-import { NguUtilityModule } from 'ngu-utility/ngu-utility.module';
 
 import { HomeComponent } from './home.component';
 import { ElectronService } from '../../providers/electron.service';
@@ -18,8 +17,7 @@ describe('HomeComponent', () => {
       imports: [
         FormsModule,
         CKEditorModule,
-        NgStringPipesModule,
-        NguUtilityModule
+        NgStringPipesModule
       ],
       providers: [
         ElectronService,
