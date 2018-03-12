@@ -1,23 +1,22 @@
 {
   "productName": "Signato",
   "directories": {
-    "app": "dist",
     "output": "app-builds"
   },
   "win": {
-    "icon": "dist/favicon",
+    "icon": "dist",
     "target": [
       "portable"
     ]
   },
   "mac": {
-    "icon": "dist/favicon",
+    "icon": "dist",
     "target": [
       "dmg"
     ]
   },
   "linux": {
-    "icon": "dist/favicon",
+    "icon": "dist",
     "target": [
       "AppImage"
     ]

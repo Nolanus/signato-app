@@ -2,6 +2,8 @@ import { Component, ViewChild } from '@angular/core';
 import { ElectronService } from './providers/electron.service';
 import { DataService } from './providers/data.service';
 import { ModalDirective } from './directives/modal.directive';
+import { TranslateService } from '@ngx-translate/core';
+import { AppConfig } from './app.config';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +17,8 @@ export class AppComponent {
   public feedbackForm = {text: '', includeLogFile: false};
   public feedbackStatus = 0;
 
-  constructor(public electronService: ElectronService, private dataService: DataService) {
+    constructor(public electronService: ElectronService, private dataService: DataService,
+      private translate: TranslateService) {
 
     if (electronService.isElectron()) {
       console.log('Mode electron');

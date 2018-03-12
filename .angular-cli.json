@@ -1,8 +1,7 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "project": {
-    "name": "angular-electron",
-    "ejected": true
+    "name": "angularelectron"
   },
   "apps": [
     {
@@ -10,7 +9,10 @@
       "outDir": "dist",
       "assets": [
         "assets",
-        "favicon.ico"
+        "favicon.ico",
+        "favicon.png",
+        "favicon.icns",
+        "favicon.256x256.png"
       ],
       "index": "index.html",
       "main": "main.ts",
@@ -22,8 +24,7 @@
       "styles": [
         "styles.scss"
       ],
-      "scripts": [
-      ],
+      "scripts": [],
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",
@@ -57,7 +58,6 @@
   },
   "defaults": {
     "styleExt": "scss",
-    "component": {
-    }
+    "component": {}
   }
 }

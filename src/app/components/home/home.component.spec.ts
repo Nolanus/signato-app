@@ -7,6 +7,7 @@ import { CKEditorModule } from 'ng2-ckeditor';
 import { HomeComponent } from './home.component';
 import { ElectronService } from '../../providers/electron.service';
 import { DataService } from '../../providers/data.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -17,7 +18,8 @@ describe('HomeComponent', () => {
       imports: [
         FormsModule,
         CKEditorModule,
-        NgStringPipesModule
+        NgStringPipesModule,
+        TranslateModule.forRoot()
       ],
       providers: [
         ElectronService,
