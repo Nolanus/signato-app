@@ -108,7 +108,7 @@ export default class Signature {
                 mapCb(null, null);
               }
             });
-          })
+          });
         }, (mapErr, result: Signature[]) => {
           if (mapErr) {
             cb(mapErr);

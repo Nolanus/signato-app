@@ -56,6 +56,6 @@ export class AppComponent {
   }
 
   public openGitHub() {
-    this.electronService.shell.openExternal('https://github.com/Nolanus/signato-app/issues/new')
+    this.electronService.shell.openExternal('https://github.com/Nolanus/signato-app/issues/new');
   }
 }

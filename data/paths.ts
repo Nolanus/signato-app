@@ -20,7 +20,7 @@ const paths = {
 
 function mapper(type: SignatureType) {
   return (path, index): SignaturesLocation => {
-    return {path, type, os: paths.os_names[index]}
+    return {path, type, os: paths.os_names[index]};
   };
 }
 

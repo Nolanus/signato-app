@@ -94,7 +94,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   public previewContent(content: string) {
-    return content.replace(/<\//g, ' </')
+    return content.replace(/<\//g, ' </');
   }
 
   public save() {
