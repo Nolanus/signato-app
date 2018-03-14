@@ -89,7 +89,7 @@ export default class Signature {
             readFile(signatureFilePath, 'utf8', (readErr, sigFileContent) => {
               if (readErr) {
                 logger.error('Error reading file ' + signatureFilePath + ' skipping it (' + readErr + ')');
-                cb(null, null);
+                mapCb(null, null);
                 return;
               }
 
