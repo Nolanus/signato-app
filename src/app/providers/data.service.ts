@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
+import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { ipcRenderer } from 'electron';
+import { NgZone } from '@angular/core';
 
 import { ElectronService } from './electron.service';
 import Signature from '../../../main/signature';
@@ -8,9 +10,9 @@ import Signature from '../../../main/signature';
 @Injectable()
 export class DataService {
 
-  public signatures: Subject<Signature[]> = new Subject();
+  public signatures: Subject<Signature[]> = new ReplaySubject(1);
 
-  constructor(private electronService: ElectronService) {
+  constructor(private electronService: ElectronService, private zone: NgZone) {
     if (!electronService.isElectron()) {
       return;
     }
@@ -19,7 +21,9 @@ export class DataService {
         this.electronService.remote.dialog.showMessageBox({type: 'error', message: err.toString(), detail: err.stack});
         console.error(err);
       } else {
-        this.signatures.next(data);
+        this.zone.run(() =>
+          this.signatures.next(data)
+        );
       }
     });
     this.electronService.ipcRenderer.on('saved-signature', (event, signatureUniqueId) => {
