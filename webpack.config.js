@@ -9,10 +9,10 @@ const autoprefixer = require("autoprefixer");
 const postcssUrl = require("postcss-url");
 const customProperties = require("postcss-custom-properties");
 
-const { NoEmitOnErrorsPlugin, SourceMapDevToolPlugin, DefinePlugin, NamedModulesPlugin } = require("webpack");
-const { BaseHrefWebpackPlugin, NamedLazyChunksWebpackPlugin, InsertConcatAssetsWebpackPlugin } = require("@angular/cli/plugins/webpack");
-const { CommonsChunkPlugin } = require("webpack").optimize;
-const { AngularCompilerPlugin } = require("@ngtools/webpack");
+const {NoEmitOnErrorsPlugin, SourceMapDevToolPlugin, DefinePlugin, NamedModulesPlugin} = require("webpack");
+const {BaseHrefWebpackPlugin, NamedLazyChunksWebpackPlugin, InsertConcatAssetsWebpackPlugin} = require("@angular/cli/plugins/webpack");
+const {CommonsChunkPlugin} = require("webpack").optimize;
+const {AngularCompilerPlugin} = require("@ngtools/webpack");
 const ConcatPlugin = require("webpack-concat-plugin");
 
 const nodeModules = path.join(process.cwd(), "node_modules");
@@ -27,35 +27,35 @@ const postcssPlugins = function () {
   // safe settings based on: https://github.com/ben-eb/cssnano/issues/358#issuecomment-283696193
   const importantCommentRe = /@preserve|@license|[@#]\s*source(?:Mapping)?URL|^!/i;
   const minimizeOptions = {
-      autoprefixer: false,
-      safe: true,
-      mergeLonghand: false,
-      discardComments: { remove: (comment) => !importantCommentRe.test(comment) }
+    autoprefixer: false,
+    safe: true,
+    mergeLonghand: false,
+    discardComments: {remove: (comment) => !importantCommentRe.test(comment)}
   };
   return [
-      postcssUrl({
-          url: (obj) => {
-            if (!obj.url.startsWith("/") || obj.url.startsWith("//")) {
-              return obj.url;
-            }
-            if (deployUrl.match(/:\/\//)) {
-              // If deployUrl contains a scheme, ignore baseHref use deployUrl as is.
-              return `${deployUrl.replace(/\/$/, "")}${obj.url}`;
-            }
-            else if (baseHref.match(/:\/\//)) {
-              // If baseHref contains a scheme, include it as is.
-              return baseHref.replace(/\/$/, "") +
-                `/${deployUrl}/${obj.url}`.replace(/\/\/+/g, "/");
-            }
-            else {
-              // Join together base-href, deploy-url and the original URL.
-              // Also dedupe multiple slashes into single ones.
-              return `/${baseHref}/${deployUrl}/${obj.url}`.replace(/\/\/+/g, "/");
-            }
-          }
-      }),
-      autoprefixer(),
-      customProperties({ preserve: true })
+    postcssUrl({
+      url: (obj) => {
+        if (!obj.url.startsWith("/") || obj.url.startsWith("//")) {
+          return obj.url;
+        }
+        if (deployUrl.match(/:\/\//)) {
+          // If deployUrl contains a scheme, ignore baseHref use deployUrl as is.
+          return `${deployUrl.replace(/\/$/, "")}${obj.url}`;
+        }
+        else if (baseHref.match(/:\/\//)) {
+          // If baseHref contains a scheme, include it as is.
+          return baseHref.replace(/\/$/, "") +
+            `/${deployUrl}/${obj.url}`.replace(/\/\/+/g, "/");
+        }
+        else {
+          // Join together base-href, deploy-url and the original URL.
+          // Also dedupe multiple slashes into single ones.
+          return `/${baseHref}/${deployUrl}/${obj.url}`.replace(/\/\/+/g, "/");
+        }
+      }
+    }),
+    autoprefixer(),
+    customProperties({preserve: true})
   ].concat(minimizeCss ? [cssnano(minimizeOptions)] : []);
 };
 
@@ -67,11 +67,12 @@ const styles = [
 ];
 
 //we add all our external scripts we want to load externally, like inserting in our index.html --> like as if it's .angular-cli.json
-const scripts = [
-];
+const scripts = [];
 
 //create file path for each , so we use for our excludes and includes where needed
-let stylePaths = styles.map(styleSrc => path.join(process.cwd(), styleSrc));
+let stylePaths = styles.map(styleSrc => {
+  path.join(process.cwd(), styleSrc)
+});
 
 function getPlugins() {
   var plugins = [];
@@ -174,11 +175,11 @@ function getPlugins() {
       "vendor"
     ],
     "minChunks": (module) => {
-              return module.resource
-                  && (module.resource.startsWith(nodeModules)
-                      || module.resource.startsWith(genDirNodeModules)
-                      || module.resource.startsWith(realNodeModules));
-          },
+      return module.resource
+        && (module.resource.startsWith(nodeModules)
+          || module.resource.startsWith(genDirNodeModules)
+          || module.resource.startsWith(realNodeModules));
+    },
     "chunks": [
       "main"
     ]
@@ -468,7 +469,7 @@ module.exports = {
         ]
       },
       {
-        "include":stylePaths,
+        "include": stylePaths,
         "test": /\.less$/,
         "use": [
           "style-loader",
