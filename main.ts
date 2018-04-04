@@ -71,7 +71,9 @@ function createWindow() {
 
   // and load the index.html of the app.
   if (serve) {
-    require('electron-reload')(__dirname, {});
+    require('electron-reload')(__dirname, {
+      electron: require(`${__dirname}/node_modules/electron`)
+    });
     win.loadURL('http://localhost:4200');
   } else {
     win.loadURL(url.format({

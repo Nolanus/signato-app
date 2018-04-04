@@ -44,8 +44,8 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ["Chrome"],
-    singleRun: process.env.CI === "true"
+    browsers: ['Chrome'],
+    singleRun: process.env.CI === 'true'
   };
 
   if (process.env.TRAVIS) {
