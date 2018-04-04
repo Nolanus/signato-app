@@ -45,14 +45,14 @@ describe('HomeComponent', () => {
     const comp = fixture.debugElement.componentInstance;
     const compiled = fixture.debugElement.nativeElement;
 
-    expect(compiled.querySelector('h5.nav-group-title').textContent).toBe('Signatures (0)');
+    expect(compiled.querySelector('h5.nav-group-title').textContent).toBe('PAGES.HOME.SIGNATURES (0)');
 
     // Trigger a data submission
     comp.dataService.signatures.next([{signatureName: 'Test', content: '123412341234'}]);
 
     fixture.detectChanges();
 
-    expect(compiled.querySelector('h5.nav-group-title').textContent).toBe('Signatures (1)');
+    expect(compiled.querySelector('h5.nav-group-title').textContent).toBe('PAGES.HOME.SIGNATURES (1)');
   }));
 
   it('display a selected signature on the main area and reflect changes', async(() => {
@@ -72,7 +72,7 @@ describe('HomeComponent', () => {
     comp.dataService.signatures.next(demoSignatures);
     fixture.detectChanges();
     expect(compiled.querySelector('h4').textContent).toBe('Apple Mail HTML signatures made simple');
-    expect(compiled.querySelector('h5.nav-group-title').textContent).toBe('Signatures (1)');
+    expect(compiled.querySelector('h5.nav-group-title').textContent).toBe('PAGES.HOME.SIGNATURES (1)');
     const listItems = compiled.querySelectorAll('li.list-group-item');
     expect(listItems.length).toBe(1);
     listItems[0].click();

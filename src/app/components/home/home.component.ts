@@ -64,7 +64,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.dataService.loadSignatures();
   }
 
-
   ngOnDestroy(): void {
     // Unregister the listeners
     this.subscriptions.forEach(subscription => subscription.unsubscribe());

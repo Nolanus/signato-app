@@ -1,7 +1,36 @@
 {
   "PAGES": {
-      "HOME": {
-          "TITLE": "App works !"
-      }
+    "SHARED": {
+      "LESS": "Less",
+      "MORE": "More",
+      "CANCEL": "Cancel",
+      "SAVE": "Save",
+      "RELOAD": "Reload",
+      "SEND": "Send",
+      "SENT": "Sent!",
+      "SENDING": "Sending..."
+    },
+    "APP": {
+      "FEEDBACK": "Feedback",
+      "FEEDBACK_CTA": "Tell us about your experience of the app!",
+      "FEEDBACK_INCLUDE_LOGFILE": "Include Logfile",
+      "FEEDBACK_CREATE_GITHUB_ISSUE": "In case your encountered a bug you may alternatively create an issue on <a href=\"#\" (click)=\"openGitHub()\">this project's GitHub repo</a>!"
+    },
+    "HOME": {
+      "SIGNATURES": "Signatures",
+      "SIG_NAME": "Signature Name",
+      "SIG_LOCATION": "Location",
+      "SIG_LOCATION_LOCAL": "Local",
+      "SIG_LOCATION_CLOUD": "Cloud",
+      "SIG_FILE_STATUS": "File status",
+      "SIG_FILE_STATUS_LOCKED": "Locked",
+      "SIG_FILE_STATUS_UNLOCKED": "Not locked",
+      "SIG_ACCOUNTS": "Accounts",
+      "SIG_ID": "Signature ID",
+      "MSG_ID": "Message ID",
+      "SIG_MIME_VERSION": "Mime Version",
+      "STARTUP_STEPS": "<ol><li>Create a signature in Apple Mail and quit the Apple Mail application</li><li>Open Signato to edit the Signatures content on HTML basis</li><li>Hit the blue save button and enjoy your new signature</li></ol>",
+      "TITLE": "App works !"
+    }
   }
 }

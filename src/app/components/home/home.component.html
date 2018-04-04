@@ -1,97 +1,93 @@
 <!-- Your app's content goes inside .window-content -->
 <div class="pane-group">
-	<div class="pane sidebar">
-		<ul class="list-group">
-			<li><h5 class="nav-group-title">Signatures ({{ signatures?.length }}) {{ 'PAGES.HOME.TITLE' | translate }}</h5></li>
-			<li class="list-group-item" [class.active]="sig.signatureUniqueId === signature?.signatureUniqueId"
-				*ngFor="let sig of signatures" (click)="selectSignature(sig)">
-				<span class="avatar media-object pull-left">{{ sig.signatureName.substr(0,2) }}</span>
-				<div class="media-body">
-					<strong>{{ sig.signatureName }}</strong>
-					<p>{{ previewContent(sig.content) | stripTags | truncate:60 }}</p>
-				</div>
-			</li>
-		</ul>
-	</div>
+  <div class="pane sidebar">
+    <ul class="list-group">
+      <li><h5 class="nav-group-title">{{ 'PAGES.HOME.SIGNATURES' | translate }} ({{ signatures?.length }})</h5></li>
+      <li class="list-group-item" [class.active]="sig.signatureUniqueId === signature?.signatureUniqueId"
+          *ngFor="let sig of signatures" (click)="selectSignature(sig)">
+        <span class="avatar media-object pull-left">{{ sig.signatureName.substr(0,2) }}</span>
+        <div class="media-body">
+          <strong>{{ sig.signatureName }}</strong>
+          <p>{{ previewContent(sig.content) | stripTags | truncate:60 }}</p>
+        </div>
+      </li>
+    </ul>
+  </div>
 
-	<div class="pane signature-pane">
-		<div *ngIf="signature" class="padded-more">
-			<div class="colored-area clearfix">
-				<p class="description-paragraph">
-					<span>Signature Name:</span>
-					<span>{{ signature.signatureName }}</span>
-				</p>
-				<p class="description-paragraph">
-					<span>Location:</span>
-					<span>
+  <div class="pane signature-pane">
+    <div *ngIf="signature" class="padded-more">
+      <div class="colored-area clearfix">
+        <p class="description-paragraph">
+          <span>{{ 'PAGES.HOME.SIG_NAME' | translate }}:</span>
+          <span>{{ signature.signatureName }}</span>
+        </p>
+        <p class="description-paragraph">
+          <span>{{ 'PAGES.HOME.SIG_LOCATION' | translate }}:</span>
+          <span>
 						<span class="icon"
-							  [ngClass]="{'icon-cloud': signature.type === 1, 'icon-drive': signature.type === 0}"
-						></span> {{ signature.type === 0 ? 'Local' : 'Cloud' }}</span>
-				</p>
-				<p class="description-paragraph">
-					<span>File status:</span>
-					<span (click)="changeSignatureFileLock($event, signature)">
+                  [ngClass]="{'icon-cloud': signature.type === 1, 'icon-drive': signature.type === 0}"
+            ></span> {{ 'PAGES.HOME.SIG_LOCATION_' + (signature.type === 0 ? 'LOCAL' : 'CLOUD') | translate }}</span>
+        </p>
+        <p class="description-paragraph">
+          <span>{{ 'PAGES.HOME.SIG_FILE_STATUS' | translate }}:</span>
+          <span (click)="changeSignatureFileLock($event, signature)">
 						<span class="icon"
-							  [class.icon-lock]="signature._fileLocked"
-							  [class.icon-lock-open]="!signature._fileLocked">
+                  [class.icon-lock]="signature._fileLocked"
+                  [class.icon-lock-open]="!signature._fileLocked">
 						</span>
-						{{ signature._fileLocked ? 'Locked' : 'Not locked' }}
+						{{ 'PAGES.HOME.' + (signature._fileLocked ? 'SIG_FILE_STATUS_LOCKED' : 'SIG_FILE_STATUS_UNLOCKED') | translate }}
 					</span>
-				</p>
-				<div *ngIf="showMore">
-					<p class="description-paragraph">
-						<span>Accounts:</span>
-						<span>{{ signature.accountURLs.length > 0 ? signature.accountURLs.join('\n') : 'None assigned' }}</span>
-					</p>
-					<p class="description-paragraph">
-						<span>Signature ID:</span>
-						<span>{{ signature.signatureUniqueId }}</span>
-					</p>
-					<p class="description-paragraph">
-						<span>Message ID:</span>
-						<span>{{ signature.messageId }}</span>
-					</p>
-					<p class="description-paragraph">
-						<span>Mime Version:</span>
-						<span>{{ signature.mimeVersion }}</span>
-					</p>
-				</div>
-				<p (click)="showMore = !showMore" class="moreShow">
+        </p>
+        <div *ngIf="showMore">
+          <p class="description-paragraph">
+            <span>{{ 'PAGES.HOME.SIG_ACCOUNTS' | translate }}:</span>
+            <span>{{ signature.accountURLs.length > 0 ? signature.accountURLs.join('\n') : 'None assigned' }}</span>
+          </p>
+          <p class="description-paragraph">
+            <span>{{ 'PAGES.HOME.SIG_ID' | translate }}:</span>
+            <span>{{ signature.signatureUniqueId }}</span>
+          </p>
+          <p class="description-paragraph">
+            <span>{{ 'PAGES.HOME.MSG_ID' | translate }}:</span>
+            <span>{{ signature.messageId }}</span>
+          </p>
+          <p class="description-paragraph">
+            <span>{{ 'PAGES.HOME.SIG_MIME_VERSION' | translate }}:</span>
+            <span>{{ signature.mimeVersion }}</span>
+          </p>
+        </div>
+        <p (click)="showMore = !showMore" class="moreShow">
 					<span>
 						<span class="icon" [class.icon-down-dir]="!showMore" [class.icon-up-dir]="showMore"></span>
-						{{ showMore ? 'Less' : 'More'}}
+						{{ showMore ? 'PAGES.SHARED.LESS' : 'PAGES.SHARED.MORE' | translate }}
 					</span>
-				</p>
-			</div>
-			<div>
-				<ckeditor
-						[(ngModel)]="signature.content"
-						[config]="editorConfig"
-						[readonly]="false"
-						(ready)="onReady($event)"
-						(change)="onChange($event)">
-				</ckeditor>
-			</div>
-		</div>
-		<div *ngIf="!signature" class="padded-more">
-			<h2>Signato</h2>
-			<h4>Apple Mail HTML signatures made simple</h4>
-			<ol>
-				<li>Create a signature in Apple Mail and quit the Apple Mail application</li>
-				<li>Open Signato to edit the Signatures content on HTML basis</li>
-				<li>Hit the blue save button and enjoy your new signature</li>
-			</ol>
-		</div>
-		<footer *ngIf="signature" class="toolbar toolbar-footer">
-			<div class="toolbar-actions">
-				<button class="btn btn-default" (click)="reloadSignatures()">
-					Cancel
-				</button>
+        </p>
+      </div>
+      <div>
+        <ckeditor
+          [(ngModel)]="signature.content"
+          [config]="editorConfig"
+          [readonly]="false"
+          (ready)="onReady($event)"
+          (change)="onChange($event)">
+        </ckeditor>
+      </div>
+    </div>
+    <div *ngIf="!signature" class="padded-more">
+      <h2>Signato</h2>
+      <h4>Apple Mail HTML signatures made simple</h4>
+      <ol [innerHTML]="'PAGES.HOME.STARTUP_STEPS' | translate"></ol>
+    </div>
+    <footer *ngIf="signature" class="toolbar toolbar-footer">
+      <div class="toolbar-actions">
+        <button class="btn btn-default" (click)="reloadSignatures()">
+          {{ 'PAGES.SHARED.CANCEL' | translate }}
+        </button>
 
-				<button class="btn btn-primary pull-right" (click)="save()">
-					Save
-				</button>
-			</div>
-		</footer>
-	</div>
+        <button class="btn btn-primary pull-right" (click)="save()">
+          {{ 'PAGES.SHARED.SAVE' | translate }}
+        </button>
+      </div>
+    </footer>
+  </div>
 </div>

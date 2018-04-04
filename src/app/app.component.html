@@ -1,41 +1,44 @@
 <header class="toolbar toolbar-header draggable">
-	<h1 class="title">{{ appTitle }}</h1>
+  <h1 class="title">{{ appTitle }}</h1>
 
-	<div class="toolbar-actions">
-		<div class="btn-group">
-			<button class="btn btn-default" (click)="reloadSignatures()">
-				<span class="icon icon-arrows-ccw"></span>
-				&nbsp;Reload
-			</button>
-		</div>
+  <div class="toolbar-actions">
+    <div class="btn-group">
+      <button class="btn btn-default" (click)="reloadSignatures()">
+        <span class="icon icon-arrows-ccw"></span>
+        &nbsp;{{ 'PAGES.SHARED.RELOAD' | translate }}
+      </button>
+    </div>
 
-		<button class="btn btn-default btn-dropdown pull-right" (click)="openFeedbackPane()">
-			<span class="icon icon-comment"></span>
-		</button>
-	</div>
+    <button class="btn btn-default btn-dropdown pull-right" (click)="openFeedbackPane()">
+      <span class="icon icon-comment"></span>
+    </button>
+  </div>
 </header>
 <div class="window-dialogs">
-	<div appModal class="dialog">
-		<h1 class="title left">Feedback</h1>
-		<div class="form-group">
-			<label for="feebackArea">Tell us about your experience of the app!</label>
-			<textarea class="form-control" rows="7" id="feebackArea" [(ngModel)]='feedbackForm.text'
-					  [disabled]="feedbackStatus !== 0"></textarea>
-		</div>
-		<div class="checkbox">
-			<label>
-				<input type="checkbox" [(ngModel)]="feedbackForm.includeLogFile"> Include Logfile
-			</label>
-		</div>
-		<p>In case your encountered a bug you may alternatively create an issue on <a href="#" (click)="openGitHub()">this
-			project's GitHub repo</a>!</p>
-		<p>
-			<button class="btn btn-default" [disabled]="feedbackStatus !== 0" (click)="feedbackDialog.close()">Cancel</button>
-			<button class="btn btn-primary pull-right" (click)="sendFeedback()"
-					[disabled]="!feedbackForm.text || feedbackStatus !== 0">
-				{{ feedbackStatus === 2 ? 'Sent!' : (feedbackStatus === 1 ? 'Sending...' : 'Send') }}
-			</button>
-		</p>
-	</div>
+  <div appModal class="dialog">
+    <h1 class="title left">{{ 'PAGES.APP.FEEDBACK' | translate }}</h1>
+    <div class="form-group">
+      <label for="feebackArea">{{ 'PAGES.APP.FEEDBACK_CTA' | translate }}</label>
+      <textarea class="form-control" rows="7" id="feebackArea" [(ngModel)]='feedbackForm.text'
+                [disabled]="feedbackStatus !== 0"></textarea>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" [(ngModel)]="feedbackForm.includeLogFile">
+        {{ 'PAGES.APP.FEEDBACK_INCLUDE_LOGFILE' | translate }}
+      </label>
+    </div>
+    <p [innerHTML]="'PAGES.APP.FEEDBACK_CREATE_GITHUB_ISSUE' | translate"></p>
+    <p>
+      <button class="btn btn-default" [disabled]="feedbackStatus !== 0" (click)="feedbackDialog.close()">
+        {{ 'PAGES.SHARED.CANCEL' | translate }}
+      </button>
+      <button class="btn btn-primary pull-right" (click)="sendFeedback()"
+              [disabled]="!feedbackForm.text || feedbackStatus !== 0">
+        {{ ('PAGES.SHARED.' + (feedbackStatus === 2 ? 'SENT' : (feedbackStatus === 1 ? 'SENDING' : 'SEND'))) | translate
+        }}
+      </button>
+    </p>
+  </div>
 </div>
 <router-outlet></router-outlet>
