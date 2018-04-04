@@ -38,7 +38,7 @@ Open the signato app and locate the signature you want to adjust in the left-han
 
 For local signatures the respective file on your disk will be locked to prevent Apple Mail from reverting the content change. As a consequence you are not capable of editing HTML signature installed with signato via the settings menu in Apple Mail any longer (other signatures will work fine).
 
-Use signato to adjust the contents of the locked signatures. To unlock a signature file select it in signato and locate the icon next to the "File status". Hold down the "alt" key and click the lock icon to toggle the file lock state. The is gets (un)locked immediately, it's not necessary to press the save button.  
+Use signato to adjust the contents of the locked signatures. To unlock a signature file select it in signato and locate the icon next to the "File status". Hold down the "alt" key and click the lock icon to toggle the file lock state. This (un)locks the file immediately, it's not necessary to press the save button.  
 
 ### I can't delete the signature!
 
