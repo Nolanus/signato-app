@@ -7,6 +7,7 @@
 /app-builds
 main.js
 main/**/*.js
+data/**/*.js
 
 # dependencies
 /node_modules
