@@ -29,7 +29,7 @@ module.exports = function (config) {
       fixWebpackSourcePaths: true
     },
     customLaunchers: {
-      Chrome_travis_ci: {
+      chromeTravisCi: {
         base: "Chrome",
         flags: ["--no-sandbox"]
       }
@@ -49,7 +49,7 @@ module.exports = function (config) {
   };
 
   if (process.env.TRAVIS) {
-    configuration.browsers = ["Chrome_travis_ci"];
+    configuration.browsers = ["chromeTravisCi"];
   }
 
   config.set(configuration);

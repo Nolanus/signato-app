@@ -71,7 +71,7 @@ const scripts = [
 ];
 
 //create file path for each , so we use for our excludes and includes where needed
-let stylePaths = styles.map(style_src => path.join(process.cwd(), style_src));
+let stylePaths = styles.map(styleSrc => path.join(process.cwd(), styleSrc));
 
 function getPlugins() {
   var plugins = [];
