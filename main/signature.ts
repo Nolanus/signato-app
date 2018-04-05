@@ -27,7 +27,7 @@ export default class Signature {
   public readonly signatureIsRich: boolean;
   public signatureName: string;
   public readonly signatureUniqueId: string;
-  private _fileLocked: boolean;
+  public _fileLocked: boolean;
   public readonly messageId?: string;
   public readonly encoding?: string;
   public readonly mimeVersion?: string;
@@ -41,7 +41,8 @@ export default class Signature {
       ], (filename, mapCb) => {
         readFile(filename, 'utf8', (err, contents) => {
           if (err) {
-            mapCb(err);
+            // We could not load the AccountsMap, but we ignore that and just pretend it was empty
+            mapCb(null, {});
             return;
           }
           mapCb(null, plistParse(contents));
