@@ -18,7 +18,9 @@ export class DataService {
     }
     this.electronService.ipcRenderer.on('loaded-signatures', (event, err, data) => {
       if (err) {
-        this.electronService.remote.dialog.showMessageBox({type: 'error', message: 'Error while loading signatures', detail: JSON.stringify(err)});
+        this.electronService.remote.dialog.showMessageBox(
+         {type: 'error', message: 'Error while loading signatures', detail: JSON.stringify(err)}
+        );
         console.error(err);
       } else {
         this.zone.run(() =>
