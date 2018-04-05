@@ -1,8 +1,36 @@
 {
   "PAGES": {
+    "SHARED": {
+      "LESS": "Mehr",
+      "MORE": "Weniger",
+      "CANCEL": "Abbrechen",
+      "SAVE": "Speichern",
+      "RELOAD": "Aktualisieren",
+      "SEND": "Senden",
+      "SENT": "Gesendet!",
+      "SENDING": "Wird gesendet..."
+    },
+    "APP": {
+      "FEEDBACK": "Feedback",
+      "FEEDBACK_CTA": "Erzähle uns von deiner Erfahrung mit der App!",
+      "FEEDBACK_INCLUDE_LOGFILE": "Logfile anhängen",
+      "FEEDBACK_CREATE_GITHUB_ISSUE": "Falls du einen Bug entdeckst kannst du alternativ auch ein Ticket im Github Repo dieses Projekts erstellen!"
+    },
     "HOME": {
       "SIGNATURES": "Signaturen",
-      "TITLE": "App geht !"
+      "SIG_NAME": "Signatur Name",
+      "SIG_LOCATION": "Pfad",
+      "SIG_LOCATION_LOCAL": "Lokal",
+      "SIG_LOCATION_CLOUD": "Cloud",
+      "SIG_FILE_STATUS": "Datei Status",
+      "SIG_FILE_STATUS_LOCKED": "Gesperrt",
+      "SIG_FILE_STATUS_UNLOCKED": "Entsperrt",
+      "SIG_ACCOUNTS": "Accounts",
+      "SIG_ID": "Signatur ID",
+      "MSG_ID": "Nachricht ID",
+      "SIG_MIME_VERSION": "Mime Version",
+      "STARTUP_STEPS": "<ol><li>Erstelle in Apple Mail eine Signatur und beenden die Apple Mail App vollständig</li><li>Öffne Signato um den HTML Code der erstellten Signatur zu bearbeiten</li><li>Drücke den blauen Speichern Button und schau dir deine neue Signatur an</li></ol>",
+      "TITLE": "App works!"
     }
   }
 }
