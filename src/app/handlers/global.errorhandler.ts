@@ -10,7 +10,7 @@ export class GlobalErrorHandler implements ErrorHandler {
     const electronService = this.injector.get(ElectronService);
     electronService.remote.dialog.showMessageBox({
       type: 'error',
-      message: error.message ? error.message : error.toString(),
+      message: error.message ? (typeof error.message === 'object' ? JSON.stringify(error.message) : error.message) : error.toString(),
       detail: error.stack
     });
     // IMPORTANT: Rethrow the error otherwise it gets swallowed
