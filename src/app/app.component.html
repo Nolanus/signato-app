@@ -28,7 +28,9 @@
         {{ 'PAGES.APP.FEEDBACK_INCLUDE_LOGFILE' | translate }}
       </label>
     </div>
-    <p [innerHTML]="'PAGES.APP.FEEDBACK_CREATE_GITHUB_ISSUE' | translate"></p>
+    <p>
+      <a href="#" (click)="openGitHub()">{{ 'PAGES.APP.FEEDBACK_CREATE_GITHUB_ISSUE' | translate }}</a>
+    </p>
     <p>
       <button class="btn btn-default" [disabled]="feedbackStatus !== 0" (click)="feedbackDialog.close()">
         {{ 'PAGES.SHARED.CANCEL' | translate }}

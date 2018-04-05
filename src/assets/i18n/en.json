@@ -14,7 +14,7 @@
       "FEEDBACK": "Feedback",
       "FEEDBACK_CTA": "Tell us about your experience of the app!",
       "FEEDBACK_INCLUDE_LOGFILE": "Include Logfile",
-      "FEEDBACK_CREATE_GITHUB_ISSUE": "In case your encountered a bug you may alternatively create an issue on <a href=\"#\" (click)=\"openGitHub()\">this project's GitHub repo</a>!"
+      "FEEDBACK_CREATE_GITHUB_ISSUE": "In case your encountered a bug you may alternatively create an issue on this project's GitHub repo!"
     },
     "HOME": {
       "SIGNATURES": "Signatures",
