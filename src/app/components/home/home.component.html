@@ -59,7 +59,7 @@
         <p (click)="showMore = !showMore" class="moreShow">
 					<span>
 						<span class="icon" [class.icon-down-dir]="!showMore" [class.icon-up-dir]="showMore"></span>
-						{{ showMore ? 'PAGES.SHARED.LESS' : 'PAGES.SHARED.MORE' | translate }}
+						{{ (showMore ? 'PAGES.SHARED.LESS' : 'PAGES.SHARED.MORE') | translate }}
 					</span>
         </p>
       </div>
