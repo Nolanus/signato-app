@@ -1,4 +1,4 @@
-import { app, BrowserWindow, screen, ipcMain, dialog } from 'electron';
+import { app, BrowserWindow, screen, ipcMain, dialog, Menu, shell } from 'electron';
 import { existsSync } from 'fs';
 import { resolve } from 'path';
 import * as log from 'electron-log';
@@ -68,6 +68,59 @@ function createWindow() {
     titleBarStyle: 'hidden',
     frame: false
   });
+
+  // Check if we are on a MAC
+  if (process.platform === 'darwin') {
+    // Create our menu entries so that we can use MAC shortcuts
+    Menu.setApplicationMenu(Menu.buildFromTemplate([{
+        label: app.getName(),
+          submenu: [
+            { role: 'about' },
+            { type: 'separator' },
+            { role: 'services', submenu: [] },
+            { type: 'separator' },
+            { role: 'hide' },
+            { role: 'hideothers' },
+            { role: 'unhide' },
+            { type: 'separator' },
+            { label: 'Quit ' + app.getName(), accelerator: 'Command+Q', click () { app.quit() } }
+      ]},
+      {
+        label: 'Edit',
+          submenu: [
+            { role: 'undo' },
+            { role: 'redo' },
+            { type: 'separator' },
+            { role: 'cut' },
+            { role: 'copy' },
+            { role: 'paste' },
+            { role: 'pasteandmatchstyle' },
+            { role: 'delete' },
+            { role: 'selectall' }
+          ]
+      },
+      {
+        role: 'window',
+          submenu: [
+            { role: 'minimize' },
+            { role: 'close' }
+          ]
+        },
+        {
+          role: 'help',
+          submenu: [
+            {
+              label: 'See latest releases',
+              click () { shell.openExternal('https://github.com/Nolanus/signato-app/releases') }
+            },
+            {
+              label: 'Readme',
+              click () { shell.openExternal('https://github.com/Nolanus/signato-app#readme') }
+            }
+          ]
+        }
+      ]));
+    }
 
   // and load the index.html of the app.
   if (serve) {
