@@ -16,6 +16,8 @@ Easily install HTML signatures in Apple Mail without fiddling around in hidden f
 
 This is a GUI version of the [signato](https://github.com/Nolanus/signato) script to easily install plain HTML signatures in Apple Mail.
 
+> **Known Issue** After editing the HTML source code return to "WYSIWYG" mode of the editor prior to saving the signature (see #86)
+
 ## Prerequisite
 
 Create your HTML signature. Notice the [limited support of certain CSS techniques in mail clients](https://www.campaignmonitor.com/css/) and place only the `body` tag and it's children in your signature HTML file for Apple Mail. Inline all style attributes, probably using a tool like [CSS Inliner](https://inliner.cm/).
