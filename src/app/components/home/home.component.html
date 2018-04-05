@@ -3,7 +3,7 @@
   <div class="pane sidebar">
     <ul class="list-group">
       <li><h5 class="nav-group-title">{{ 'PAGES.HOME.SIGNATURES' | translate }} ({{ signatures?.length }})</h5></li>
-      <li class="list-group-item" [class.active]="sig.signatureUniqueId === signature?.signatureUniqueId"
+      <li class="list-group-item" [class.active]="sig === signature"
           *ngFor="let sig of signatures" (click)="selectSignature(sig)">
         <span class="avatar media-object pull-left">{{ sig.signatureName.substr(0,2) }}</span>
         <div class="media-body">
