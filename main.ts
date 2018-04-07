@@ -103,7 +103,22 @@ function createWindow() {
         role: 'window',
           submenu: [
             { role: 'minimize' },
-            { role: 'close' }
+            { role: 'close' },
+            { type: 'separator'},
+            {
+              label: 'Toggle Developer Tools',
+              accelerator: 'Command+Alt+I',
+              click: (menuItem, browserWindow) => {
+                browserWindow.webContents.toggleDevTools();
+              },
+            },
+            {
+              label: 'Reload',
+              accelerator: 'Command+Shift+R',
+              click: () => {
+                win.reload();
+              },
+            }
           ]
         },
         {
