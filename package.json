@@ -62,7 +62,7 @@
     "@types/core-js": "0.9.36",
     "@types/jasmine": "2.8.3",
     "@types/jasminewd2": "2.0.3",
-    "@types/node": "7.0.7",
+    "@types/node": "10.0.3",
     "@types/quoted-printable": "^0.2.2",
     "@types/request": "^2.0.5",
     "@types/utf8": "^2.1.6",
