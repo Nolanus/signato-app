@@ -37,7 +37,7 @@
     "e2e": "npm-run-all -p pree2e:build pree2e:protractor"
   },
   "dependencies": {
-    "async": "2.6.0",
+    "async": "2.6.1",
     "electron-log": "2.2.14",
     "fast-plist": "0.1.2",
     "ng2-ckeditor": "1.2.0",
