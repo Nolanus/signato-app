@@ -57,20 +57,31 @@
           </p>
         </div>
         <p (click)="showMore = !showMore" class="moreShow">
-					<span>
-						<span class="icon" [class.icon-down-dir]="!showMore" [class.icon-up-dir]="showMore"></span>
-						{{ (showMore ? 'PAGES.SHARED.LESS' : 'PAGES.SHARED.MORE') | translate }}
-					</span>
+          <span>
+              <span class="icon" [class.icon-down-dir]="!showMore" [class.icon-up-dir]="showMore"></span>
+              {{ (showMore ? 'PAGES.SHARED.LESS' : 'PAGES.SHARED.MORE') | translate }}
+          </span>
         </p>
       </div>
       <div>
+        <div class="tab-group">
+          <div class="tab-item active" [ngClass]="{'active': editorMode}" (click)="editorMode = true">
+            Editor
+          </div>
+          <div class="tab-item" [ngClass]="{'active': !editorMode}" (click)="editorMode = false">
+            HTML
+          </div>
+        </div>
+
         <ckeditor
+          *ngIf="editorMode"
           [(ngModel)]="signature.content"
           [config]="editorConfig"
           [readonly]="false"
           (ready)="onReady($event)"
           (change)="onChange($event)">
         </ckeditor>
+        <textarea class="sourceCodeEditor" [(ngModel)]="signature.content" *ngIf="!editorMode"></textarea>
       </div>
     </div>
     <div *ngIf="!signature" class="padded-more">

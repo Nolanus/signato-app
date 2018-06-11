@@ -15,6 +15,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   public signatures: Signature[] = [];
   public signature: Signature;
   public showMore = false;
+  public editorMode = true;
 
   private ckEditor: any;
   private resetEditorUndo = false;
@@ -50,7 +51,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       {name: 'others', groups: ['others']},
       {name: 'about', groups: ['about']}
     ],
-    removeButtons: 'Cut,Copy,Paste,Anchor,DocProps,Superscript,Subscript',
+    removeButtons: 'Cut,Copy,Paste,Anchor,DocProps,Superscript,Subscript,Source',
 
     // Dialog windows are also simplified.
     removeDialogTabs: 'link:advanced'
