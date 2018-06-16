@@ -38,7 +38,7 @@
   },
   "dependencies": {
     "async": "2.6.0",
-    "electron-log": "2.2.14",
+    "electron-log": "2.2.15",
     "fast-plist": "0.1.2",
     "ng2-ckeditor": "1.2.0",
     "quoted-printable": "^1.0.1",
