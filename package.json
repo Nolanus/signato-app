@@ -75,7 +75,7 @@
     "dotenv": "5.0.1",
     "electron": "~1.8.4",
     "electron-builder": "20.4.1",
-    "electron-reload": "1.2.2",
+    "electron-reload": "1.2.3",
     "enhanced-resolve": "4.0.0",
     "fs-extra": "5.0.0",
     "jasmine-core": "2.99.1",
