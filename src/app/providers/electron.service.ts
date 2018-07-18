@@ -1,10 +1,14 @@
 import { Injectable } from '@angular/core';
-import { ipcRenderer, shell, remote } from 'electron';
+
+// If you import a module but never use any of the imported values other than as TypeScript types,
+// the resulting javascript file will look as if you never imported the module at all.
+import { ipcRenderer, webFrame, shell, remote } from 'electron';
 
 @Injectable()
 export class ElectronService {
 
   ipcRenderer: typeof ipcRenderer;
+  webFrame: typeof webFrame;
   shell: typeof shell;
   remote: typeof remote;
 
@@ -14,6 +18,7 @@ export class ElectronService {
       this.ipcRenderer = window.require('electron').ipcRenderer;
       this.shell = window.require('electron').shell;
       this.remote = window.require('electron').remote;
+      this.webFrame = window.require('electron').webFrame;
     }
   }
 

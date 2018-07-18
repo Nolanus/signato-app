@@ -1,11 +1,10 @@
 import 'zone.js/dist/zone-mix';
 import 'reflect-metadata';
-import 'polyfills';
+import '../polyfills';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { CKEditorModule } from 'ng2-ckeditor';
 import { NgStringPipesModule } from 'angular-pipes';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
@@ -42,7 +41,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     FormsModule,
     HttpClientModule,
     AppRoutingModule,
-    CKEditorModule,
     NgStringPipesModule,
     TranslateModule.forRoot({
       loader: {

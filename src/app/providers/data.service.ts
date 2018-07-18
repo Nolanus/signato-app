@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
+import { Subject, ReplaySubject } from 'rxjs';
 import { ipcRenderer } from 'electron';
 import { NgZone } from '@angular/core';
 
@@ -19,7 +18,7 @@ export class DataService {
     this.electronService.ipcRenderer.on('loaded-signatures', (event, err, data) => {
       if (err) {
         this.electronService.remote.dialog.showMessageBox(
-         {type: 'error', message: 'Error while loading signatures', detail: JSON.stringify(err)}
+          {type: 'error', message: 'Error while loading signatures', detail: JSON.stringify(err)}
         );
         console.error(err);
       } else {
@@ -41,6 +40,13 @@ export class DataService {
       return;
     }
     return this.electronService.ipcRenderer.send('load-signatures');
+  }
+
+  public previewSignature(signature: Signature) {
+    if (!this.electronService.isElectron()) {
+      return;
+    }
+    this.electronService.ipcRenderer.send('preview-signature', signature);
   }
 
   public saveSignature(signature: Signature) {

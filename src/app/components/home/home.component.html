@@ -1,4 +1,3 @@
-<!-- Your app's content goes inside .window-content -->
 <div class="pane-group">
   <div class="pane sidebar">
     <ul class="list-group">
@@ -64,24 +63,7 @@
         </p>
       </div>
       <div>
-        <div class="tab-group">
-          <div class="tab-item active" [ngClass]="{'active': editorMode}" (click)="editorMode = true">
-            Editor
-          </div>
-          <div class="tab-item" [ngClass]="{'active': !editorMode}" (click)="editorMode = false">
-            HTML
-          </div>
-        </div>
-
-        <ckeditor
-          *ngIf="editorMode"
-          [(ngModel)]="signature.content"
-          [config]="editorConfig"
-          [readonly]="false"
-          (ready)="onReady($event)"
-          (change)="onChange($event)">
-        </ckeditor>
-        <textarea class="sourceCodeEditor" [(ngModel)]="signature.content" *ngIf="!editorMode"></textarea>
+        <textarea class="sourceCodeEditor" [(ngModel)]="signature.content"></textarea>
       </div>
     </div>
     <div *ngIf="!signature" class="padded-more">
@@ -97,6 +79,10 @@
 
         <button class="btn btn-primary pull-right" (click)="save()">
           {{ 'PAGES.SHARED.SAVE' | translate }}
+        </button>
+
+        <button class="btn btn-default pull-right" (click)="previewSignature()">
+          {{ 'PAGES.SHARED.PREVIEW' | translate }}
         </button>
       </div>
     </footer>

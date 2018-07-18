@@ -3,7 +3,7 @@ import { ElectronService } from './providers/electron.service';
 import { DataService } from './providers/data.service';
 import { ModalDirective } from './directives/modal.directive';
 import { TranslateService } from '@ngx-translate/core';
-import { AppConfig } from './app.config';
+import { AppConfig } from '../environments/environment';
 
 @Component({
   selector: 'app-root',

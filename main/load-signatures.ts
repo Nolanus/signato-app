@@ -1,12 +1,13 @@
-import { Stats, stat } from 'fs';
+import { Stats, stat, writeFile } from 'fs';
 import { resolve } from 'path';
-
+import { exec } from 'child_process';
 import { map, filter as asyncFilter } from 'async';
 
 import paths from './../data/paths';
 import IpcHandler from './ipcHandler';
 import { SignaturesLocation } from '../data/paths';
 import Signature from './signature';
+import * as os from "os";
 
 const {dialog} = require('electron');
 
@@ -61,6 +62,22 @@ export class LoadMailSignatureHandler extends IpcHandler {
         } else {
           dialog.showMessageBox({type: 'info', buttons: ['OK'], message: 'Signature saved'});
         }
+      });
+    });
+
+    this.ipcMain.on('preview-signature', (event, _signature: Signature) => {
+      if (_signature === undefined || _signature === null) {
+        event.sender.send('saved-signature', 'Signature instance not found');
+        return;
+      }
+      let previewFilePath = resolve(os.tmpdir(), _signature.messageId + '.html');
+
+      writeFile(previewFilePath, _signature.content, function (err) {
+        if (err) {
+          return console.log(err);
+        }
+
+        exec('open file://' + previewFilePath);
       });
     });
   }

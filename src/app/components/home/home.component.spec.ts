@@ -2,7 +2,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NgStringPipesModule } from 'angular-pipes';
 import { FormsModule } from '@angular/forms';
-import { CKEditorModule } from 'ng2-ckeditor';
 
 import { HomeComponent } from './home.component';
 import { ElectronService } from '../../providers/electron.service';
@@ -17,7 +16,6 @@ describe('HomeComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         FormsModule,
-        CKEditorModule,
         NgStringPipesModule,
         TranslateModule.forRoot()
       ],
