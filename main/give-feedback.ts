@@ -27,7 +27,7 @@ export class GiveFeedbackHandler extends IpcHandler {
     this.logger.info('Sending feedback to getForm, includeLogfile: ' + includeLogFile);
 
     const appleMailCommand = [
-      'tell application "Mail"\n' + 'set newMessage to (a reference to (make new outgoing message))\n' + 'tell newMessage\n' + '\tmake new recipient at beginning of to recipients ¬\n' + '\t\twith properties {address:"someone@somewhere.com"}\n' + '\tset the subject to "Signato App Feedback"\n' + '\tset the content to "Please describe your problem here\\n"\n',
+      'tell application "Mail"\n' + 'set newMessage to (a reference to (make new outgoing message))\n' + 'tell newMessage\n' + '\tmake new recipient at beginning of to recipients ¬\n' + '\t\twith properties {address:"sebastian.fuss@googlemail.com"}\n' + '\tset the subject to "Signato App Feedback"\n' + '\tset the content to "Please describe your problem here\\n"\n',
       '',
       '\tset visible to true\n' + '\tactivate\n' + 'end tell\n' + 'end tell'];
 
