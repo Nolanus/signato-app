@@ -7,9 +7,5 @@ describe('angular-electron App', () => {
   beforeEach(() => {
     page = new AngularElectronPage();
   });
-
-  it('should display message saying App works !', () => {
-    page.navigateTo('/');
-    expect(element(by.css('app-home h1')).getText()).toMatch('App works !');
-  });
+  
 });
