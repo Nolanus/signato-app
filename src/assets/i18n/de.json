@@ -7,13 +7,11 @@
       "SAVE": "Speichern",
       "PREVIEW": "Vorschau",
       "RELOAD": "Aktualisieren",
-      "SEND": "Senden",
-      "SENT": "Gesendet!",
-      "SENDING": "Wird gesendet..."
+      "GO": "Los"
     },
     "APP": {
       "FEEDBACK": "Feedback",
-      "FEEDBACK_CTA": "Erzähle uns von deiner Erfahrung mit der App!",
+      "FEEDBACK_CTA": "Danke, dass du diese App benutzt. Um Feedback inklusive Logfile zu gebe, setze den Haken unten und drück den \”Los\" Button. Es wird eine neue E-Mail mit in Apple Mail geöffnet, in welche du dein Feedback an den Entwickler eintragen und absenden kannst.",
       "FEEDBACK_INCLUDE_LOGFILE": "Logfile anhängen",
       "FEEDBACK_CREATE_GITHUB_ISSUE": "Falls du einen Bug entdeckst kannst du alternativ auch ein Ticket im Github Repo dieses Projekts erstellen!"
     },

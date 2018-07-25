@@ -17,11 +17,7 @@
 <div class="window-dialogs">
   <div appModal class="dialog">
     <h1 class="title left">{{ 'PAGES.APP.FEEDBACK' | translate }}</h1>
-    <div class="form-group">
-      <label for="feebackArea">{{ 'PAGES.APP.FEEDBACK_CTA' | translate }}</label>
-      <textarea class="form-control" rows="7" id="feebackArea" [(ngModel)]='feedbackForm.text'
-                [disabled]="feedbackStatus !== 0"></textarea>
-    </div>
+    <p>{{ 'PAGES.APP.FEEDBACK_CTA' | translate }}</p>
     <div class="checkbox">
       <label>
         <input type="checkbox" [(ngModel)]="feedbackForm.includeLogFile">
@@ -36,9 +32,8 @@
         {{ 'PAGES.SHARED.CANCEL' | translate }}
       </button>
       <button class="btn btn-primary pull-right" (click)="sendFeedback()"
-              [disabled]="!feedbackForm.text || feedbackStatus !== 0">
-        {{ ('PAGES.SHARED.' + (feedbackStatus === 2 ? 'SENT' : (feedbackStatus === 1 ? 'SENDING' : 'SEND'))) | translate
-        }}
+              [disabled]="feedbackStatus !== 0">
+        {{ 'PAGES.SHARED.GO' | translate }}
       </button>
     </p>
   </div>

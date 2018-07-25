@@ -1,11 +1,8 @@
 import { dialog } from 'electron';
-import  * as request from 'request';
 import IpcHandler from './ipcHandler';
-import { createReadStream } from 'fs';
 import { exec } from "child_process";
 import { tmpdir } from "os";
 import { resolve } from "path";
-import { unlink } from "fs";
 
 export class GiveFeedbackHandler extends IpcHandler {
 
@@ -28,49 +25,48 @@ export class GiveFeedbackHandler extends IpcHandler {
 
   private sendFeedback(feedback: string, includeLogFile: boolean, cb: (error: any, body: string) => void) {
     this.logger.info('Sending feedback to getForm, includeLogfile: ' + includeLogFile);
-    const logFile = this.logger.transports.file.file || this.logger.transports.file.findLogPath();
-    const zipLogFile = resolve(tmpdir(), 'log.zip');
-    if (!logFile) {
-      this.logger.error('No logfile path found');
-      cb(new Error('No logfile path found'), null);
-      return;
+
+    const appleMailCommand = [
+      'tell application "Mail"\n' + 'set newMessage to (a reference to (make new outgoing message))\n' + 'tell newMessage\n' + '\tmake new recipient at beginning of to recipients ¬\n' + '\t\twith properties {address:"someone@somewhere.com"}\n' + '\tset the subject to "Signato App Feedback"\n' + '\tset the content to "Please describe your problem here\\n"\n',
+      '',
+      '\tset visible to true\n' + '\tactivate\n' + 'end tell\n' + 'end tell'];
+
+    if (includeLogFile) {
+      const logFile = this.logger.transports.file.file || this.logger.transports.file.findLogPath();
+      const zipLogFile = resolve(tmpdir(), 'log.zip');
+      if (!logFile) {
+        this.logger.error('No logfile path found');
+        cb(new Error('No logfile path found'), null);
+        return;
+      }
+
+      appleMailCommand[1] = '\ttell content\n' +
+        '\t\tmake new attachment ¬\n' +
+        '\t\t\twith properties {file name:"' + zipLogFile.replace(/(\s+)/g, '\\$1') + '"} ¬\n' +
+        '\t\t\tat after the last word of the last paragraph\n' +
+        '\tend tell\n';
+      this.logger.info('Log file is located at ' + logFile + ', will zip to ' + zipLogFile);
+
+      exec('zip -X -j ' + zipLogFile + ' ' + logFile, (err) => {
+        if (err) {
+          cb(err, null);
+          return;
+        }
+        this.logger.debug('File zipped successfully');
+        this.executeAppleScript(appleMailCommand.join(''), cb);
+      });
+    } else {
+      this.executeAppleScript(appleMailCommand.join(''), cb);
     }
-    this.logger.info('Log file is located at ' + logFile + ', will zip to ' + zipLogFile);
-    exec('zip -X -j ' + zipLogFile + ' ' + logFile, (err) => {
+  }
+
+  private executeAppleScript(script, cb) {
+    exec('osascript -e \'' + script + '\'', (err) => {
       if (err) {
         cb(err, null);
         return;
       }
-      this.logger.debug('File zipped successfully');
-      const formData: {feedback: string, file?: any} = {
-        feedback
-      };
-      if (includeLogFile) {
-        formData.file = createReadStream(zipLogFile);
-      }
-
-      request.post({
-        url: 'https://www.getform.org/u/ffc54d12-e0c5-4140-855a-b88f948c94fa',
-        formData
-      }, (err, httpResponse, body) => {
-        if (err) {
-          this.logger.error('Error while sending the feedback data:' + err);
-        } else {
-          this.logger.info('Feedback send successfully: ' + JSON.stringify(httpResponse));
-        }
-        if (includeLogFile) {
-          // Unlink the zip log file, but don't wait for that
-          unlink(zipLogFile, (err) => {
-            if (err) {
-              this.logger.error('Error unlinking the log zip file: ' + err);
-            } else {
-              this.logger.debug('Successfully unlinked the zip log file');
-            }
-          });
-        }
-        cb(err, body);
-      });
+      cb(null, null);
     });
-
   }
 }

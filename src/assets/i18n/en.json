@@ -7,13 +7,11 @@
       "SAVE": "Save",
       "PREVIEW": "Preview",
       "RELOAD": "Reload",
-      "SEND": "Send",
-      "SENT": "Sent!",
-      "SENDING": "Sending..."
+      "GO": "Go"
     },
     "APP": {
       "FEEDBACK": "Feedback",
-      "FEEDBACK_CTA": "Tell us about your experience of the app!",
+      "FEEDBACK_CTA": "Thank you for using this app. In order to provide feedback with a Logfile attached, you may set the checkbox below and hit \"Go\". This will open a new E-Mail in Apple Mail with the logfile attachment where you may leave your comment to send it to the developer.",
       "FEEDBACK_INCLUDE_LOGFILE": "Include Logfile",
       "FEEDBACK_CREATE_GITHUB_ISSUE": "In case your encountered a bug you may alternatively create an issue on this project's GitHub repo!"
     },
