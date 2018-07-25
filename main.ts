@@ -6,26 +6,19 @@ import * as log from 'electron-log';
 import { LoadMailSignatureHandler } from './main/load-signatures';
 import { CheckMailAppHandler } from './main/check-mailapp';
 import { GiveFeedbackHandler } from './main/give-feedback';
-import * as path from 'path';
-import * as url from 'url';
+import { join as pathJoin } from 'path';
+import { format as urlFormat } from 'url';
+import { homedir } from 'os';
 
 let win, serve, debugMode = false;
 const args = process.argv.slice(1);
 serve = args.some(val => val === '--serve');
-let appPath = __dirname;
 
 if (!serve) {
-  const appContentStringStart = __dirname.indexOf('/Contents/Resources/app');
-  if (appContentStringStart >= 0) {
-    log.debug('Found app inside an .app, will adjust appPath');
-    appPath = __dirname.substr(0, appContentStringStart)
-  }
-  log.debug('AppPath is ' + appPath);
-
-  if (existsSync(resolve(appPath, '../DEBUG'))) {
+  if (existsSync(resolve(pathJoin(homedir(), 'Desktop'), 'SIGNATO_DEBUG'))) {
     log.transports.file.level = 'debug';
     debugMode = true;
-    log.info('Found DEBUG file next to the executable, so will log everything into the file');
+    log.info('Found DEBUG file, so will log everything into the file');
   }
 }
 log.info('Starting Signato');
@@ -49,7 +42,7 @@ function createWindow() {
       type: 'info',
       buttons: ['OK'],
       message: 'Debug Mode enabled',
-      detail: 'Signato is now running in Debug Mode with more verbose logging messages. Remove the "DEBUG" file next to the app and restart to run in normal mode.',
+      detail: 'Signato is now running in Debug Mode with more verbose logging messages. Remove the "SIGNATO_DEBUG" file/folder on your desktop and restart to run in normal mode.',
       title: 'Debug Mode enabled'
     }, () => {
       // Just a dummy callback to not block the process
@@ -153,8 +146,8 @@ function createWindow() {
     });
     win.loadURL('http://localhost:4200');
   } else {
-    win.loadURL(url.format({
-      pathname: path.join(__dirname, 'dist/index.html'),
+    win.loadURL(urlFormat({
+      pathname: pathJoin(__dirname, 'dist/index.html'),
       protocol: 'file:',
       slashes: true
     }));

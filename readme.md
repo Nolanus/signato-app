@@ -40,7 +40,7 @@ Open the signato app and locate the signature you want to adjust in the left-han
 
 For local signatures the respective file on your disk will be locked to prevent Apple Mail from reverting the content change. As a consequence you are not capable of editing HTML signature installed with signato via the settings menu in Apple Mail any longer (other signatures will work fine).
 
-Use signato to adjust the contents of the locked signatures. To unlock a signature file select it in signato and locate the icon next to the "File status". Hold down the "alt" key and click the lock icon to toggle the file lock state. This (un)locks the file immediately, it's not necessary to press the save button.  
+Use signato to adjust the contents of the locked signatures. To unlock a signature file select it in signato and locate the icon next to the "File status". Hold down the "alt" key and click the lock icon to toggle the file lock state. This (un)locks the file immediately. It's not necessary to press the save button.  
 
 ### I can't delete the signature!
 
@@ -56,7 +56,7 @@ To avoid issues caused by manipulating files used by Apple Mail, signato can onl
 
 ### I found a bug!
 
-Test whether the error occurs every time you perform certain steps (that you can reproduce it). For optimal bug reporting, please create a file named `DEBUG` next to the signato app. Then start signato app to enter the debug mode (a dialog will confirm the DEBUG mode). Perform the erroneous function. Use the feedback feature at the top right to provide details of the error and set the check mark to attach the logfile!  
+Test whether the error occurs every time you perform certain steps (that you can reproduce it). For optimal bug reporting, please create a file or folder named `SIGNATO_DEBUG` on your desktop. Then start signato app to enter the debug mode (a dialog will confirm the DEBUG mode). Perform the erroneous function. Use the feedback feature at the top right and set the check mark to attach the logfile to an email that you can send to the developer. Please also include some details of the problem and steps you performed.  
 
 ### I want to give feedback?
 
