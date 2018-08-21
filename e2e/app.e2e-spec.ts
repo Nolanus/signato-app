@@ -7,5 +7,5 @@ describe('angular-electron App', () => {
   beforeEach(() => {
     page = new AngularElectronPage();
   });
-  
+
 });
