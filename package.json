@@ -63,7 +63,7 @@
     "@ngx-translate/http-loader": "3.0.1",
     "@types/jasmine": "2.8.7",
     "@types/jasminewd2": "2.0.3",
-    "@types/node": "8.9.4",
+    "@types/node": "10.12.9",
     "@types/quoted-printable": "^0.2.2",
     "@types/request": "^2.0.5",
     "@types/utf8": "^2.1.6",
