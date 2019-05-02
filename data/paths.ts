@@ -6,12 +6,12 @@ const paths = {
     'Library/Mail/V3/MailData/Signatures', // OS X 10.11
     'Library/Mail/V4/MailData/Signatures', // OS X 10.12
     'Library/Mail/V5/MailData/Signatures', // OS X 10.13
+    'Library/Mail/V6/MailData/Signatures', // OS X 10.14
   ],
   'icloud': [
     'Library/Mobile Documents/com~apple~mail/Data/MailData/Signatures', // OS X 10.7/10.8/10.9/10.10
     'Library/Mobile Documents/com~apple~mail/Data/V3/MailData/Signatures', // OS X 10.11
-    'Library/Mobile Documents/com~apple~mail/Data/V4/Signatures', // OS X 10.12
-    'Library/Mobile Documents/com~apple~mail/Data/V4/Signatures', // OS X 10.13
+    'Library/Mobile Documents/com~apple~mail/Data/V4/Signatures', // OS X 10.12/10.13/10.14
   ],
   'os_names': [
     'OS X 10.7/10.8/10.9/10.10',
