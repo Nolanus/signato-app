@@ -65,7 +65,7 @@
     "@types/jasminewd2": "2.0.3",
     "@types/node": "8.9.4",
     "@types/quoted-printable": "^0.2.2",
-    "@types/request": "^2.0.5",
+    "@types/request": "^2.48.4",
     "@types/utf8": "^2.1.6",
     "codelyzer": "4.2.1",
     "core-js": "2.5.6",
