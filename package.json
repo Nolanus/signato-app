@@ -40,7 +40,7 @@
   "dependencies": {
     "angular-pipes": "7.1.0",
     "async": "2.6.0",
-    "electron-log": "2.2.14",
+    "electron-log": "4.0.4",
     "fast-plist": "0.1.2",
     "quoted-printable": "^1.0.1",
     "request": "^2.85.0",
