@@ -1,3 +1,5 @@
+> :warning: **Warning** This tool is not longer actively maintained. It can still work and PRs might be merged, however no bugs will be fixed or support for later macOS versions added
+
 <img src="./src/favicon.png" width="250"/>
 
 # Signato
